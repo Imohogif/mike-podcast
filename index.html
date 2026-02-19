@@ -7,101 +7,57 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --gold:#C9A84C;--gold-l:#E8C97A;--gold-dim:rgba(201,168,76,.15);
-  --bg:#090909;--bg2:#111;--bg3:#1a1a1a;
-  --txt:#F0EDE6;--muted:#6B6459;
-  --border:rgba(201,168,76,.18);--red:#FF4444;
-}
+:root{--gold:#C9A84C;--gold-l:#E8C97A;--gold-dim:rgba(201,168,76,.15);--bg:#090909;--bg2:#111;--bg3:#1a1a1a;--txt:#F0EDE6;--muted:#6B6459;--border:rgba(201,168,76,.18);--red:#FF4444;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--txt)}
+.screen{display:none}.screen.active{display:flex;flex-direction:column;min-height:100vh}
 
-/* ─── SCREENS ─── */
-.screen{display:none}
-.screen.active{display:flex;flex-direction:column;min-height:100vh}
-
-/* ══ SCREEN 1 — WELCOME ══ */
-#s-welcome{
-  align-items:center;justify-content:center;
-  padding:2rem 1.25rem;gap:1.5rem;
-  overflow-y:auto;
-}
+/* WELCOME */
+#s-welcome{align-items:center;justify-content:center;padding:2rem 1.25rem;gap:1.5rem;overflow-y:auto}
 .logo-wrap{display:flex;flex-direction:column;align-items:center;gap:.5rem}
-.mic-ring{
-  width:72px;height:72px;border-radius:50%;border:2px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  animation:pls 3s ease-in-out infinite;
-}
+.mic-ring{width:72px;height:72px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;animation:pls 3s ease-in-out infinite}
 .mic-ring svg{width:32px;height:32px;fill:var(--gold)}
-@keyframes pls{
-  0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.4)}
-  50%{box-shadow:0 0 0 16px rgba(201,168,76,.05)}
-}
+@keyframes pls{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.4)}50%{box-shadow:0 0 0 16px rgba(201,168,76,.05)}}
 .brand{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;letter-spacing:-.02em;line-height:1}
 .brand-sub{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);font-weight:500}
-
-.card{
-  background:var(--bg2);border:1px solid var(--border);border-radius:20px;
-  padding:1.75rem 1.5rem;width:100%;max-width:440px;
-  position:relative;
-}
-.card::before{
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:50%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
-}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:1.75rem 1.5rem;width:100%;max-width:440px;position:relative}
+.card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .card h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.5rem;text-align:center}
 .card p{color:var(--muted);font-size:.875rem;line-height:1.7;text-align:center;margin-bottom:1.5rem}
-
 .lang-row{display:flex;gap:.5rem;margin-bottom:1.2rem}
 .lang-btn{flex:1;padding:.6rem;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;font-size:.875rem;cursor:pointer;transition:all .2s}
 .lang-btn.on{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);font-weight:600}
-
 .field-lbl{font-size:.78rem;color:var(--muted);margin-bottom:.3rem;display:block}
-.field{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:11px;padding:.8rem 1rem;color:var(--txt);font-family:'Tajawal',sans-serif;font-size:1rem;outline:none;transition:border-color .2s;margin-bottom:1.1rem;-webkit-appearance:none}
-.field:focus{border-color:var(--gold)}
-.field::placeholder{color:var(--muted)}
-
+.field{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:11px;padding:.8rem 1rem;color:var(--txt);font-family:'Tajawal',sans-serif;font-size:1rem;outline:none;transition:border-color .2s;margin-bottom:1.1rem}
+.field:focus{border-color:var(--gold)}.field::placeholder{color:var(--muted)}
 .btn{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;border-radius:11px;color:#0A0A0A;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s}
 .btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.25)}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* ══ SCREEN 2 — TOPICS ══ */
-#s-topics{
-  padding:1.5rem 1.25rem 2rem;
-  gap:1.2rem;
-  overflow-y:auto;
-}
-.topics-top{text-align:center;padding-top:.5rem}
+/* TOPICS */
+#s-topics{padding:1.5rem 1.25rem 2rem;gap:1.2rem;overflow-y:auto}
+.topics-top{text-align:center}
 .sec-eye{font-size:.7rem;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem}
 .sec-h{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700}
 .sec-p{color:var(--muted);font-size:.85rem;margin-top:.3rem}
-
 .cats{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
 .cat{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem;cursor:pointer;transition:all .2s;text-align:right}
-.cat:active{transform:scale(.97)}
-.cat.on{border-color:var(--gold);background:var(--gold-dim)}
+.cat:active{transform:scale(.97)}.cat.on{border-color:var(--gold);background:var(--gold-dim)}
 .cat-emoji{font-size:1.6rem;margin-bottom:.3rem;display:block}
 .cat-name{font-size:.9rem;font-weight:600;margin-bottom:.15rem;color:var(--txt)}
 .cat-desc{font-size:.72rem;color:var(--muted);line-height:1.45}
-
 .subs{display:none}.subs.show{display:block}
 .subs-lbl{font-size:.7rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem}
 .chips{display:flex;flex-wrap:wrap;gap:.4rem}
 .chip{padding:.42rem .85rem;border-radius:100px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);font-family:'Tajawal',sans-serif;font-size:.8rem;cursor:pointer;transition:all .18s}
-.chip:active{transform:scale(.95)}
-.chip.on{background:var(--gold);border-color:var(--gold);color:#0A0A0A;font-weight:600}
+.chip:active{transform:scale(.95)}.chip.on{background:var(--gold);border-color:var(--gold);color:#0A0A0A;font-weight:600}
 
-/* ══ SCREEN 3 — STUDIO ══ */
-#s-studio{
-  height:100vh;min-height:unset;
-  position:fixed;inset:0;
-  overflow:hidden;
-}
+/* STUDIO */
+#s-studio{height:100vh;min-height:unset;position:fixed;inset:0;overflow:hidden}
 .prog-bar{height:2px;background:var(--bg3);flex-shrink:0}
 .prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));transition:width .6s ease;width:0%}
-
 .top-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.live-pill{display:flex;align-items:center;gap:.3rem;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.28);border-radius:100px;padding:.2rem .6rem;font-size:.68rem;font-weight:700;color:var(--red);letter-spacing:.08em}
+.live-pill{display:flex;align-items:center;gap:.3rem;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.28);border-radius:100px;padding:.2rem .6rem;font-size:.68rem;font-weight:700;color:var(--red)}
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--red);animation:blink 1.2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 .host-pill{display:flex;align-items:center;gap:.4rem}
@@ -109,10 +65,8 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 .ep-label{font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
 .ep-label span{color:var(--txt);font-weight:600}
 .q-ctr{font-size:.72rem;color:var(--muted);flex-shrink:0}
-
 .chat{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;-webkit-overflow-scrolling:touch}
 .chat::-webkit-scrollbar{width:0}
-
 .msg{display:flex;gap:.5rem;animation:msgIn .35s cubic-bezier(.16,1,.3,1) both}
 @keyframes msgIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .msg.host{flex-direction:row}.msg.guest{flex-direction:row-reverse}
@@ -125,7 +79,6 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 .bubble{padding:.75rem .95rem;border-radius:14px;font-size:.9rem;line-height:1.75}
 .msg.host .bubble{background:var(--bg2);border:1px solid var(--border);border-bottom-right-radius:4px}
 .msg.guest .bubble{background:var(--gold-dim);border:1px solid rgba(201,168,76,.25);border-bottom-left-radius:4px;text-align:right}
-
 .typing{display:none;align-items:center;gap:.5rem}
 .typing.show{display:flex}
 .t-dots{display:flex;gap:.25rem}
@@ -136,30 +89,42 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 /* VOICE PANEL */
 .voice-panel{flex-shrink:0;background:var(--bg2);border-top:1px solid var(--border);padding:.7rem 1rem .9rem}
 .vp-inner{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:.4rem}
+
+/* Waveform — gold when host speaks, red when user listens */
 .waveform{display:flex;align-items:center;justify-content:center;gap:3px;height:24px;opacity:0;transition:opacity .3s}
 .waveform.show{opacity:1}
 .waveform .bar{width:3px;border-radius:2px;background:var(--gold);animation:wv 1s ease-in-out infinite;min-height:4px}
+.waveform.rec .bar{background:var(--red)}
 .waveform .bar:nth-child(1){animation-delay:0s}.waveform .bar:nth-child(2){animation-delay:.1s}
 .waveform .bar:nth-child(3){animation-delay:.2s}.waveform .bar:nth-child(4){animation-delay:.3s}
 .waveform .bar:nth-child(5){animation-delay:.4s}.waveform .bar:nth-child(6){animation-delay:.3s}
 .waveform .bar:nth-child(7){animation-delay:.2s}.waveform .bar:nth-child(8){animation-delay:.1s}
 .waveform .bar:nth-child(9){animation-delay:0s}
 @keyframes wv{0%,100%{height:5px}50%{height:18px}}
+
 .status-lbl{text-align:center;font-size:.74rem;color:var(--muted);min-height:15px}
-.tr-prev{font-size:.74rem;color:var(--muted);text-align:center;min-height:13px;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-prev{font-size:.74rem;color:var(--gold);text-align:center;min-height:13px;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 .controls{display:flex;align-items:center;justify-content:center;gap:1rem}
-.mic-btn{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;box-shadow:0 4px 18px rgba(201,168,76,.2)}
-.mic-btn svg{width:26px;height:26px;fill:#0A0A0A}
-.mic-btn.listening{background:linear-gradient(135deg,#FF5555,#FF8888);animation:micP 1s ease-out infinite}
-@keyframes micP{0%{box-shadow:0 0 0 0 rgba(255,85,85,.5)}70%{box-shadow:0 0 0 14px rgba(255,85,85,0)}100%{box-shadow:0 0 0 0 rgba(255,85,85,0)}}
-.mic-btn.off{opacity:.35;cursor:not-allowed}
+
+/* MIC button states */
+.mic-btn{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;box-shadow:0 4px 18px rgba(201,168,76,.2);position:relative}
+.mic-btn svg{width:26px;height:26px;fill:#0A0A0A;transition:all .2s}
+/* SPEAKING state — host is talking, tap to interrupt */
+.mic-btn.host-speaking{background:linear-gradient(135deg,#333,#444);box-shadow:none}
+.mic-btn.host-speaking::after{content:'⏸';position:absolute;font-size:1.4rem;color:var(--gold)}
+.mic-btn.host-speaking svg{opacity:0}
+/* LISTENING state — user is talking */
+.mic-btn.listening{background:linear-gradient(135deg,#CC2222,#FF5555);animation:micP 1s ease-out infinite}
+.mic-btn.listening::after{content:'';position:absolute}
+@keyframes micP{0%{box-shadow:0 0 0 0 rgba(255,68,68,.5)}70%{box-shadow:0 0 0 16px rgba(255,68,68,0)}100%{box-shadow:0 0 0 0 rgba(255,68,68,0)}}
+/* WAITING state — AI thinking */
+.mic-btn.waiting{opacity:.4;cursor:not-allowed}
+
 .side-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg3);font-size:1rem;flex-shrink:0}
-#stop-btn{background:rgba(255,68,68,.1);border-color:rgba(255,68,68,.28);color:var(--red);opacity:0;pointer-events:none}
-#stop-btn.show{opacity:1;pointer-events:all}
 #txt-toggle.on{background:var(--gold-dim);border-color:var(--gold)}
 .txt-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:.6rem .85rem;display:none;align-items:flex-end;gap:.5rem}
-.txt-wrap.show{display:flex}
-.txt-wrap:focus-within{border-color:var(--gold)}
+.txt-wrap.show{display:flex}.txt-wrap:focus-within{border-color:var(--gold)}
 #txt-input{flex:1;background:transparent;border:none;outline:none;color:var(--txt);font-family:'Tajawal',sans-serif;font-size:.9rem;resize:none;max-height:80px;line-height:1.6;direction:rtl}
 #txt-input::placeholder{color:var(--muted)}
 .txt-send{width:34px;height:34px;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
@@ -191,13 +156,13 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
   </div>
   <div class="card">
     <h2>مرحباً بك في الاستوديو</h2>
-    <p>اليوم أنت الضيف. مايك يدير حواراً <strong>صوتياً</strong> معك — تتكلم هو يسمع، وتقدر تقاطعه متى تبي.</p>
+    <p>اليوم أنت الضيف. مايك يتكلم معك <strong>بالصوت</strong> — هو يسمعك وأنت تسمعه، وتقدر تقاطعه.</p>
     <div class="lang-row">
       <button class="lang-btn" onclick="setLang('en')" id="b-en">🇬🇧 English</button>
       <button class="lang-btn on" onclick="setLang('ar')" id="b-ar">🇸🇦 العربية</button>
     </div>
     <label class="field-lbl" id="lbl-name">ما اسمك؟</label>
-    <input class="field" id="inp-name" placeholder="أدخل اسمك..." autocomplete="off" inputmode="text" />
+    <input class="field" id="inp-name" placeholder="أدخل اسمك..." autocomplete="off" />
     <button class="btn" id="btn-go" onclick="goTopics()" disabled>دخول الاستوديو ✦</button>
   </div>
 </div>
@@ -244,11 +209,12 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
       <div class="tr-prev" id="tr-prev"></div>
       <div class="status-lbl" id="status"></div>
       <div class="controls">
-        <div class="side-btn" id="stop-btn" onclick="interruptHost()">⏸</div>
-        <button class="mic-btn off" id="mic-btn" onclick="handleMic()">
+        <div class="side-btn" id="txt-toggle" onclick="toggleText()">⌨️</div>
+        <!-- Single mic button — changes state based on context -->
+        <button class="mic-btn waiting" id="mic-btn" onclick="handleMicTap()">
           <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V21H9v2h6v-2h-2v-2.07A8 8 0 0 0 20 11h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/></svg>
         </button>
-        <div class="side-btn" id="txt-toggle" onclick="toggleText()">⌨️</div>
+        <div class="side-btn" style="opacity:0;pointer-events:none"></div>
       </div>
       <div class="txt-wrap" id="txt-wrap">
         <textarea id="txt-input" rows="1" placeholder="اكتب إجابتك..." oninput="autoResize(this)" onkeydown="onEnter(event)"></textarea>
@@ -261,7 +227,13 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 </div>
 
 <script>
-const S={name:'',lang:'ar',cat:null,topic:null,msgs:[],qi:0,total:6,speaking:false,listening:false,waiting:false,done:false,synth:window.speechSynthesis,rec:null};
+const S={
+  name:'',lang:'ar',cat:null,topic:null,
+  msgs:[],qi:0,total:6,
+  speaking:false,listening:false,waiting:false,done:false,
+  synth:window.speechSynthesis,rec:null,
+  autoListen:true, // auto-start mic after host finishes
+};
 
 const CATS={
   ar:[
@@ -282,7 +254,7 @@ const CATS={
   ]
 };
 
-// INIT
+// ── INIT ──
 document.getElementById('inp-name').addEventListener('input',function(){
   document.getElementById('btn-go').disabled=this.value.trim().length<2;
 });
@@ -295,9 +267,7 @@ function setLang(l){
   document.getElementById('b-ar').classList.toggle('on',l==='ar');
   document.getElementById('b-en').classList.toggle('on',l==='en');
   document.documentElement.dir=l==='ar'?'rtl':'ltr';
-  document.documentElement.lang=l;
   document.getElementById('inp-name').placeholder=l==='ar'?'أدخل اسمك...':'Enter your name...';
-  document.getElementById('inp-name').dir=l==='ar'?'rtl':'ltr';
   document.getElementById('lbl-name').textContent=l==='ar'?'ما اسمك؟':"What's your name?";
   document.getElementById('btn-go').textContent=l==='ar'?'دخول الاستوديو ✦':'Enter Studio ✦';
 }
@@ -310,8 +280,7 @@ function show(id){
 
 function goTopics(){
   S.name=document.getElementById('inp-name').value.trim();
-  show('s-topics');
-  renderCats();
+  show('s-topics');renderCats();
   document.getElementById('h-topics').textContent=S.lang==='ar'?`عن ماذا نتحدث، ${S.name}؟`:`What shall we discuss, ${S.name}?`;
 }
 
@@ -342,15 +311,19 @@ function pickSub(el,t){
   document.getElementById('btn-rec').disabled=false;
 }
 
+// ── START ──
 async function startEpisode(){
   showOvl(S.lang==='ar'?'جاري تحضير الحلقة...':'Preparing your episode...');
   show('s-studio');
   document.getElementById('ep-lbl').textContent=S.topic;
   S.msgs=[];S.qi=0;S.done=false;
-  setStatus(S.lang==='ar'?'مايك يفتح الحلقة...':'Mike is opening the episode...');
+  setMicState('waiting');
+  setStatus(S.lang==='ar'?'جاري تحميل الحلقة...':'Loading episode...');
+
   const opener=S.lang==='ar'
     ?`ابدأ الحلقة الآن. رحّب بضيفك ${S.name} بحرارة واحترافية، عرّف موضوع الحلقة "${S.topic}"، ثم اطرح السؤال الأول مباشرة.`
-    :`Open the episode now. Give a warm professional welcome to your guest ${S.name}, introduce the topic "${S.topic}", then ask the first question directly.`;
+    :`Open the episode now. Give a warm professional welcome to ${S.name}, introduce "${S.topic}", then ask the first question directly.`;
+
   S.msgs.push({role:'user',content:opener});
   try{
     const res=await callAPI(S.msgs);
@@ -358,129 +331,279 @@ async function startEpisode(){
     S.msgs.push({role:'assistant',content:res});
     S.qi=1;addMsg('host',res);updateProg();
     await speakHost(res);
-  }catch(e){hideOvl();addMsg('host','⚠️ '+errMsg());enableMic();}
+  }catch(e){
+    hideOvl();
+    const errDetail=e.message||'';
+    addMsg('host','⚠️ '+errMsg()+'\n\n'+errDetail);
+    setMicState('ready');
+  }
 }
 
 function buildSys(){
-  if(S.lang==='ar') return `أنت "مايك"، مقدم بودكاست صوتي احترافي. أسلوبك راقٍ، ذكي، دافئ، محفّز. تتحدث بالعربية الفصحى البسيطة.
+  if(S.lang==='ar') return `أنت "مايك"، مقدم بودكاست صوتي احترافي. أسلوبك راقٍ، ذكي، دافئ، محفّز. تتحدث بالعربية الفصحى البسيطة — واضحة وسلسة.
 الضيف: ${S.name} | الموضوع: ${S.topic}
-قواعد: سؤال واحد فقط في كل رد. تعمّق بناءً على الإجابة. اجعل الضيف يشعر بأهميته. 6 أسئلة رئيسية. عند الاختتام: ابدأ بـ [END] ثم قدّم خاتمة رائعة.`;
-  return `You are "Mike," a professional voice podcast host. Sophisticated, warm, intelligent. Clear English.
+قواعد مهمة جداً:
+• سؤال واحد فقط في كل رد، لا أكثر
+• تعمّق بذكاء بناءً على الإجابة
+• اجعل الضيف يشعر بأهميته وتميّزه
+• استخرج القصص والتجارب الشخصية
+• الحلقة 6 أسئلة رئيسية
+• عند الاختتام: ابدأ ردك بـ [END] ثم قدّم خاتمة رائعة تثني على الضيف`;
+
+  return `You are "Mike," a professional voice podcast host. Sophisticated, warm, intelligent. Clear natural English.
 Guest: ${S.name} | Topic: ${S.topic}
-Rules: ONE question per response. Go deeper based on answers. Make guest feel valued. 6 main questions. When closing: start with [END] then deliver a wonderful closing.`;
+Important rules:
+• ONE question per response only, no more
+• Go deeper based on each answer intelligently  
+• Make the guest feel valued and fascinating
+• Draw out personal stories and experiences
+• 6 main questions total
+• When closing: start with [END] then deliver a wonderful closing`;
 }
 
+// ── TTS: Host speaks ──
 async function speakHost(text){
-  S.synth.cancel();S.speaking=true;
-  document.getElementById('stop-btn').classList.add('show');
-  showWave(true);
-  setStatus(S.lang==='ar'?'مايك يتحدث — اضغط ⏸ للمقاطعة':'Mike is speaking — tap ⏸ to interrupt');
-  disableMic();
+  S.speaking=true;
+  S.synth.cancel();
+  setMicState('host-speaking');
+  showWave(true,'gold');
+  setStatus(S.lang==='ar'?'مايك يتحدث... (اضغط للمقاطعة)':'Mike is speaking... (tap to interrupt)');
+
   const clean=text.replace(/\[END\]/g,'').replace(/\*+/g,'').replace(/#+/g,'').trim();
+
   return new Promise(resolve=>{
     const u=new SpeechSynthesisUtterance(clean);
-    u.lang=S.lang==='ar'?'ar-SA':'en-US';u.rate=0.91;u.pitch=1.0;u.volume=1.0;
+    u.lang=S.lang==='ar'?'ar-SA':'en-US';
+    u.rate=0.9;u.pitch=1.0;u.volume=1.0;
+
+    // pick best voice
     const vs=S.synth.getVoices();
-    const v=S.lang==='ar'?vs.find(v=>v.lang.startsWith('ar')):vs.find(v=>v.lang.startsWith('en')&&(v.name.includes('Daniel')||v.name.includes('Samantha')||v.name.includes('Alex')));
-    if(v)u.voice=v;
-    u.onend=()=>{S.speaking=false;document.getElementById('stop-btn').classList.remove('show');showWave(false);if(!S.done){setStatus(S.lang==='ar'?'اضغط المايك وتحدّث 🎙':'Tap the mic and speak 🎙');enableMic();}resolve();};
-    u.onerror=()=>{S.speaking=false;showWave(false);enableMic();resolve();};
+    if(S.lang==='ar'){
+      const v=vs.find(v=>v.lang.startsWith('ar'));
+      if(v)u.voice=v;
+    } else {
+      const v=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.includes('Daniel'))||vs.find(v=>v.name.includes('Alex'))||vs.find(v=>v.name.includes('Samantha'))||vs.find(v=>v.lang.startsWith('en'));
+      if(v)u.voice=v;
+    }
+
+    u.onend=()=>{
+      S.speaking=false;
+      showWave(false);
+      if(!S.done){
+        // Auto-start listening after host finishes
+        if(S.autoListen){
+          setMicState('ready');
+          setStatus(S.lang==='ar'?'تحدّث الآن 🎙':'Your turn, speak now 🎙');
+          setTimeout(()=>startRec(),400);
+        } else {
+          setMicState('ready');
+          setStatus(S.lang==='ar'?'اضغط المايك وتحدّث':'Tap to speak');
+        }
+      }
+      resolve();
+    };
+    u.onerror=(e)=>{
+      S.speaking=false;showWave(false);
+      setMicState('ready');resolve();
+    };
     S.synth.speak(u);
   });
 }
 
+// ── INTERRUPT ──
 function interruptHost(){
   if(!S.speaking)return;
-  S.synth.cancel();S.speaking=false;
-  document.getElementById('stop-btn').classList.remove('show');showWave(false);
-  setStatus(S.lang==='ar'?'تفضّل، أنا أسمعك 🎙':'Go ahead, I\'m listening 🎙');enableMic();
+  S.synth.cancel();
+  S.speaking=false;
+  showWave(false);
+  setStatus(S.lang==='ar'?'تفضّل، أنا أسمعك 🎙':'Go ahead, I\'m listening 🎙');
+  setMicState('ready');
+  setTimeout(()=>startRec(),200);
 }
 
-function handleMic(){
-  if(S.waiting||S.done)return;
-  if(S.speaking){interruptHost();return;}
-  if(S.listening){stopRec();return;}
+// ── MIC TAP ──
+function handleMicTap(){
+  if(S.done)return;
+  if(S.speaking){ interruptHost(); return; }
+  if(S.waiting){ return; }
+  if(S.listening){ stopRec(); return; }
   startRec();
 }
 
+// ── STT ──
 function startRec(){
+  if(S.listening||S.waiting)return;
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showTextMode();setStatus(S.lang==='ar'?'الصوت غير مدعوم، استخدم النص':'Voice not supported, use text');return;}
-  S.rec=new SR();S.rec.lang=S.lang==='ar'?'ar-SA':'en-US';S.rec.continuous=false;S.rec.interimResults=true;
-  S.rec.onstart=()=>{S.listening=true;document.getElementById('mic-btn').classList.add('listening');setStatus(S.lang==='ar'?'أنا أسمعك... 🎙':'Listening... 🎙');showWave(true);};
+  if(!SR){
+    showTextMode();
+    setStatus(S.lang==='ar'?'الصوت غير مدعوم في هذا المتصفح، استخدم النص':'Voice not supported, use text input');
+    return;
+  }
+  S.rec=new SR();
+  S.rec.lang=S.lang==='ar'?'ar-SA':'en-US';
+  S.rec.continuous=false;
+  S.rec.interimResults=true;
+
+  S.rec.onstart=()=>{
+    S.listening=true;
+    setMicState('listening');
+    showWave(true,'red');
+    setStatus(S.lang==='ar'?'أنا أسمعك...':'Listening...');
+  };
   S.rec.onresult=(e)=>{
     let interim='',final='';
-    for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript;}
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal)final+=e.results[i][0].transcript;
+      else interim+=e.results[i][0].transcript;
+    }
     document.getElementById('tr-prev').textContent=final||interim;
     if(final)stopRec(final);
   };
-  S.rec.onerror=(e)=>{stopRec();if(e.error==='not-allowed'){showTextMode();setStatus(S.lang==='ar'?'السماح بالميكروفون مطلوب':'Microphone permission required');}else setStatus(S.lang==='ar'?'لم أسمعك، حاول مجدداً':'Didn\'t catch that, try again');};
-  S.rec.onend=()=>{if(S.listening)stopRec();};
+  S.rec.onerror=(e)=>{
+    stopRec();
+    if(e.error==='not-allowed'){showTextMode();setStatus(S.lang==='ar'?'يرجى السماح بالميكروفون من المتصفح':'Allow mic access in browser settings');}
+    else if(e.error==='no-speech'){setStatus(S.lang==='ar'?'لم أسمعك، حاول مجدداً':'Didn\'t catch that, try again');setMicState('ready');}
+    else setStatus(S.lang==='ar'?'خطأ في الميكروفون':'Mic error');
+  };
+  S.rec.onend=()=>{ if(S.listening)stopRec(); };
   S.rec.start();
 }
 
 function stopRec(txt){
-  S.listening=false;document.getElementById('mic-btn').classList.remove('listening');showWave(false);
+  S.listening=false;
+  showWave(false);
   try{if(S.rec)S.rec.stop();}catch(e){}
   document.getElementById('tr-prev').textContent='';
-  if(txt&&txt.trim())processAnswer(txt.trim());else setStatus(S.lang==='ar'?'اضغط للتحدث':'Tap to speak');
+  if(txt&&txt.trim()){
+    setMicState('waiting');
+    processAnswer(txt.trim());
+  } else {
+    setMicState('ready');
+    setStatus(S.lang==='ar'?'اضغط للتحدث':'Tap to speak');
+  }
 }
 
-function showTextMode(){document.getElementById('txt-toggle').classList.add('on');document.getElementById('txt-wrap').classList.add('show');}
-
+// ── PROCESS ──
 async function processAnswer(text){
-  disableMic();S.waiting=true;addMsg('guest',text);S.msgs.push({role:'user',content:text});showTyping(true);
+  S.waiting=true;
+  addMsg('guest',text);
+  S.msgs.push({role:'user',content:text});
+  showTyping(true);
   setStatus(S.lang==='ar'?'مايك يفكر...':'Mike is thinking...');
   try{
-    const res=await callAPI(S.msgs);showTyping(false);S.msgs.push({role:'assistant',content:res});
+    const res=await callAPI(S.msgs);
+    showTyping(false);
+    S.msgs.push({role:'assistant',content:res});
     const isEnd=res.trimStart().startsWith('[END]');
-    if(isEnd){S.done=true;const clean=res.replace('[END]','').trim();addMsg('host',clean);updateProg(true);await speakHost(clean);showEnd();}
-    else{S.qi=Math.min(S.qi+1,S.total);addMsg('host',res);updateProg();S.waiting=false;await speakHost(res);}
-  }catch(e){showTyping(false);S.waiting=false;addMsg('host','⚠️ '+errMsg());enableMic();}
+    if(isEnd){
+      S.done=true;
+      const clean=res.replace('[END]','').trim();
+      addMsg('host',clean);updateProg(true);
+      S.waiting=false;
+      await speakHost(clean);
+      showEnd();
+    } else {
+      S.qi=Math.min(S.qi+1,S.total);
+      addMsg('host',res);updateProg();
+      S.waiting=false;
+      await speakHost(res);
+    }
+  }catch(e){
+    showTyping(false);S.waiting=false;
+    addMsg('host','⚠️ '+errMsg());
+    setMicState('ready');
+    setStatus(S.lang==='ar'?'حدث خطأ، حاول مجدداً':'Error occurred, try again');
+  }
 }
 
-function toggleText(){const on=document.getElementById('txt-toggle').classList.toggle('on');document.getElementById('txt-wrap').classList.toggle('show',on);if(on)document.getElementById('txt-input').focus();}
-function sendText(){const t=document.getElementById('txt-input').value.trim();if(!t||S.waiting)return;document.getElementById('txt-input').value='';autoResize(document.getElementById('txt-input'));processAnswer(t);}
+// ── MIC STATE MACHINE ──
+function setMicState(state){
+  const btn=document.getElementById('mic-btn');
+  btn.className='mic-btn '+state;
+  // state: 'waiting' | 'host-speaking' | 'listening' | 'ready'
+}
+
+// ── TEXT MODE ──
+function toggleText(){
+  const on=document.getElementById('txt-toggle').classList.toggle('on');
+  document.getElementById('txt-wrap').classList.toggle('show',on);
+  if(on)document.getElementById('txt-input').focus();
+}
+function showTextMode(){
+  document.getElementById('txt-toggle').classList.add('on');
+  document.getElementById('txt-wrap').classList.add('show');
+}
+function sendText(){
+  const t=document.getElementById('txt-input').value.trim();
+  if(!t||S.waiting)return;
+  document.getElementById('txt-input').value='';
+  autoResize(document.getElementById('txt-input'));
+  // stop mic if running
+  if(S.listening){try{S.rec.stop();}catch(e){}}
+  S.listening=false;
+  showWave(false);
+  setMicState('waiting');
+  processAnswer(t);
+}
 function onEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendText();}}
 
+// ── API ──
 async function callAPI(messages){
-  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages,system:buildSys()})});
-  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||r.status);}
-  const d=await r.json();return d.text;
+  const r=await fetch('/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages,system:buildSys()})
+  });
+  if(!r.ok){
+    let errText='';
+    try{const j=await r.json();errText=j.error||'';}catch(e){}
+    throw new Error(`${r.status}: ${errText}`);
+  }
+  const d=await r.json();
+  return d.text;
 }
 
+// ── DOM ──
 function addMsg(role,text){
   const chat=document.getElementById('chat'),typing=document.getElementById('typing');
   const d=document.createElement('div');d.className=`msg ${role}`;
   const ava=role==='host'?'🎙':(S.name[0]||'?').toUpperCase();
   const nm=role==='host'?'مايك':S.name;
   d.innerHTML=`<div class="msg-ava">${ava}</div><div class="msg-col"><div class="msg-name">${nm}</div><div class="bubble">${text.replace(/\[END\]/g,'').replace(/\n/g,'<br>').trim()}</div></div>`;
-  chat.insertBefore(d,typing);d.scrollIntoView({behavior:'smooth',block:'nearest'});
+  chat.insertBefore(d,typing);
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
   document.getElementById('q-ctr').textContent=S.lang==='ar'?`س ${toA(S.qi)} / ${toA(S.total)}`:`Q ${S.qi} / ${S.total}`;
 }
 function toA(n){return String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);}
 function showTyping(v){const t=document.getElementById('typing');t.classList.toggle('show',v);if(v)t.scrollIntoView({behavior:'smooth',block:'nearest'});}
-function enableMic(){S.waiting=false;const b=document.getElementById('mic-btn');b.classList.remove('off');b.disabled=false;}
-function disableMic(){const b=document.getElementById('mic-btn');b.classList.add('off');b.disabled=true;}
 function setStatus(t){document.getElementById('status').textContent=t;}
-function showWave(v){document.getElementById('wave').classList.toggle('show',v);}
+function showWave(v,color='gold'){
+  const w=document.getElementById('wave');
+  w.classList.toggle('show',v);
+  w.classList.toggle('rec',color==='red');
+}
 function updateProg(done=false){document.getElementById('prog').style.width=(done?100:Math.round(S.qi/S.total*100))+'%';}
 function showEnd(){
   const e=document.createElement('div');e.className='ep-end';
-  e.innerHTML=`<h3>🎙 ${S.lang==='ar'?'انتهت الحلقة':'Episode Complete'}</h3><p>${S.lang==='ar'?`شكراً ${S.name}!`:`Thank you ${S.name}!`}</p><button class="btn-ghost" onclick="restart()">${S.lang==='ar'?'حلقة جديدة ↺':'New Episode ↺'}</button>`;
-  document.getElementById('chat').appendChild(e);e.scrollIntoView({behavior:'smooth'});
+  e.innerHTML=`<h3>🎙 ${S.lang==='ar'?'انتهت الحلقة':'Episode Complete'}</h3><p>${S.lang==='ar'?`شكراً ${S.name}، كانت رائعة!`:`Thank you ${S.name}, it was wonderful!`}</p><button class="btn-ghost" onclick="restart()">${S.lang==='ar'?'حلقة جديدة ↺':'New Episode ↺'}</button>`;
+  document.getElementById('chat').appendChild(e);
+  e.scrollIntoView({behavior:'smooth'});
   document.getElementById('voice-panel').style.display='none';
 }
 function restart(){
-  S.synth.cancel();S.msgs=[];S.qi=0;S.done=false;S.speaking=false;S.waiting=false;
+  S.synth.cancel();S.msgs=[];S.qi=0;S.done=false;S.speaking=false;S.waiting=false;S.listening=false;
   document.getElementById('chat').innerHTML=`<div class="typing" id="typing"><div class="host-ava">🎙</div><div class="t-dots"><span></span><span></span><span></span></div></div>`;
-  document.getElementById('voice-panel').style.display='';show('s-welcome');
+  document.getElementById('voice-panel').style.display='';
+  show('s-welcome');
 }
-function errMsg(){return S.lang==='ar'?'خطأ في الاتصال. تحقق من إعدادات السيرفر.':'Server error. Check deployment settings.';}
+function errMsg(){return S.lang==='ar'?'خطأ في الاتصال بالسيرفر.':'Server connection error.';}
 function showOvl(t){document.getElementById('ov-txt').textContent=t;document.getElementById('overlay').classList.add('show');}
 function hideOvl(){document.getElementById('overlay').classList.remove('show');}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+
+// load voices early
 window.speechSynthesis.onvoiceschanged=()=>{};
+if(window.speechSynthesis) window.speechSynthesis.getVoices();
 </script>
 </body>
 </html>
