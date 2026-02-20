@@ -618,55 +618,73 @@ function buildSys(){
 }
 
 async function speakHost(text){
-  stopAudio();S.speaking=true;setSpeaking('host');setMic('host-talking');
-  setStatus(S.lang==='ar'?'مايك يتحدث... تكلّم لتقاطعه':'Mike is speaking... speak to interrupt');
+  // Kill VAD completely before host speaks — prevents TTS audio triggering mic
+  stopVAD();
+  stopAudio();
+  S.speaking=true;
+  setSpeaking('host');
+  setMic('host-talking');
+  setStatus(S.lang==='ar'?'مايك يتحدث...':'Mike is speaking...');
   const clean=text.replace(/\[END\]/g,'').replace(/\*+/g,'').replace(/\n+/g,' ').trim();
+  const onDone=()=>{
+    S.speaking=false; setSpeaking(null);
+    if(!S.done){
+      setMic('ready');
+      setStatus(S.lang==='ar'?'دورك — تكلّم الآن 🎙':'Your turn — speak now 🎙');
+      setTimeout(()=>startVAD(), 700); // 700ms gap after host finishes
+    }
+  };
   try{
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'tts',text:clean,lang:S.lang})});
-    if(!r.ok)throw new Error('TTS '+(await r.json().catch(()=>({}))).error||r.status);
-    const blob=await r.blob();const url=URL.createObjectURL(blob);
-    const audio=new Audio(url);S.currentAudio=audio;
-    audio.onended=()=>{S.speaking=false;setSpeaking(null);URL.revokeObjectURL(url);if(!S.done){setMic('ready');setStatus(S.lang==='ar'?'تحدّث الآن...':'Your turn...');setTimeout(()=>startVAD(),300);}};
-    audio.onerror=()=>{S.speaking=false;setSpeaking(null);setMic('ready');setTimeout(()=>startVAD(),300);};
-    audio.play().catch(()=>{S.speaking=false;setSpeaking(null);setMic('ready');setStatus(S.lang==='ar'?'اضغط للبدء':'Tap to start');});
-    startVAD(true);
+    if(!r.ok) throw new Error('TTS error');
+    const blob=await r.blob(); const url=URL.createObjectURL(blob);
+    const audio=new Audio(url); S.currentAudio=audio;
+    audio.onended=()=>{ URL.revokeObjectURL(url); onDone(); };
+    audio.onerror=()=>{ URL.revokeObjectURL(url); onDone(); };
+    audio.play().catch(()=>{ S.speaking=false; setSpeaking(null); setMic('ready'); setStatus(S.lang==='ar'?'اضغط المايك للبدء':'Tap mic to start'); });
   }catch(e){
     S.speaking=false;
-    const u=new SpeechSynthesisUtterance(clean);u.lang=S.lang==='ar'?'ar-SA':'en-US';u.rate=0.9;
-    const vs=window.speechSynthesis.getVoices();const v=S.lang==='ar'?vs.find(v=>v.lang.startsWith('ar')):vs.find(v=>v.lang.startsWith('en-GB'))||vs.find(v=>v.lang.startsWith('en'));if(v)u.voice=v;
-    u.onend=()=>{setSpeaking(null);setMic('ready');setTimeout(()=>startVAD(),300);};
+    setSpeaking('host'); setMic('host-talking'); S.speaking=true;
+    const u=new SpeechSynthesisUtterance(clean);
+    u.lang=S.lang==='ar'?'ar-SA':'en-US'; u.rate=0.9;
+    const vs=window.speechSynthesis.getVoices();
+    const v=S.lang==='ar'?vs.find(v=>v.lang.startsWith('ar')):vs.find(v=>v.lang.startsWith('en-GB'))||vs.find(v=>v.lang.startsWith('en'));
+    if(v) u.voice=v;
+    u.onend=()=>{ S.speaking=false; setSpeaking(null); onDone(); };
+    u.onerror=()=>{ S.speaking=false; setSpeaking(null); onDone(); };
     window.speechSynthesis.speak(u);
   }
 }
 
 function stopAudio(){if(S.currentAudio){S.currentAudio.pause();S.currentAudio.src='';S.currentAudio=null;}}
 
-function startVAD(interruptMode=false){
-  if(vadRec)return;
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setMic('ready');return;}
-  vadRec=new SR();vadRec.lang=S.lang==='ar'?'ar-SA':'en-US';vadRec.continuous=true;vadRec.interimResults=true;
-  let finalText='';
-  vadRec.onstart=()=>{if(!interruptMode){setMic('listening');setSpeaking('guest');setStatus(S.lang==='ar'?'أنا أسمعك...':'Listening...');}};
+function startVAD(){
+  if(vadRec||S.speaking||S.waiting||S.done)return;
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){showTextMode();return;}
+  vadRec=new SR();
+  vadRec.lang=S.lang==="ar"?"ar-SA":"en-US";
+  vadRec.continuous=true;vadRec.interimResults=true;
+  let finalText="";let hasText=false;
+  vadRec.onstart=()=>{setMic("listening");setSpeaking("guest");setStatus(S.lang==="ar"?"أنا أسمعك...":"Listening...");};
   vadRec.onresult=(e)=>{
-    let interim='',final='';
+    if(S.speaking){stopVAD();return;}
+    let interim="",final="";
     for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript;}
-    if(interruptMode&&(interim||final)){
-      stopAudio();window.speechSynthesis.cancel();S.speaking=false;interruptMode=false;
-      setSpeaking('guest');setMic('listening');setStatus(S.lang==='ar'?'تفضّل، أنا أسمعك...':'Go ahead...');
-    }
-    setTranscript('guest',`${S.name}: ${final||interim}`);
-    if(final){finalText+=final+' ';clearTimeout(S.vadTimeout);S.vadTimeout=setTimeout(()=>{stopVAD();if(finalText.trim())processAnswer(finalText.trim());else{setMic('ready');startVAD();}},1800);}
+    setTranscript("guest",S.name+": "+(final||interim));
+    if(final){finalText+=final+" ";hasText=true;clearTimeout(S.vadTimeout);S.vadTimeout=setTimeout(()=>{stopVAD();if(finalText.trim())processAnswer(finalText.trim());else setMic("ready");},2000);}
   };
-  vadRec.onerror=(e)=>{stopVAD();if(e.error==='not-allowed'){showTextMode();setStatus(S.lang==='ar'?'يرجى السماح بالميكروفون':'Allow microphone');}else if(!interruptMode)setMic('ready');};
-  vadRec.onend=()=>{if(vadRec&&!S.waiting&&!S.done&&!interruptMode){try{vadRec.start();}catch(e){}}};
+  vadRec.onerror=(e)=>{stopVAD();if(e.error==="not-allowed"){showTextMode();setStatus(S.lang==="ar"?"يرجى السماح بالميكروفون":"Allow microphone");}else setMic("ready");};
+  vadRec.onend=()=>{if(vadRec&&!S.waiting&&!S.done&&!S.speaking&&!hasText){try{vadRec.start();}catch(e){vadRec=null;}}};
   try{vadRec.start();}catch(e){vadRec=null;}
 }
+
 
 function stopVAD(){clearTimeout(S.vadTimeout);if(vadRec){try{vadRec.stop();}catch(e){}vadRec=null;}}
 
 function handleMicTap(){
   if(S.done)return;
-  if(S.speaking){stopAudio();window.speechSynthesis.cancel();S.speaking=false;setSpeaking(null);stopVAD();setMic('ready');setTimeout(()=>startVAD(),200);return;}
+  if(S.speaking){stopAudio();window.speechSynthesis.cancel();S.speaking=false;setSpeaking(null);stopVAD();setMic('ready');setTimeout(()=>startVAD(), 500);return;}
   if(S.waiting)return;
   if(vadRec){stopVAD();setMic('ready');setStatus('');}else startVAD();
 }
