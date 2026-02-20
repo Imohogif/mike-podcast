@@ -8,8 +8,8 @@
 <style>
 :root{
   --gold:#C9A84C;--gold-l:#E8C97A;--gold-dim:rgba(201,168,76,.15);
-  --bg:#080808;--bg2:#0f0f0f;--bg3:#181818;
-  --txt:#F0EDE6;--muted:#6B6459;--border:rgba(201,168,76,.15);--red:#FF4444;
+  --bg:#060504;--bg2:#0f0d0a;--bg3:#1a1710;
+  --txt:#F0EDE6;--muted:#7a6f62;--border:rgba(201,168,76,.15);--red:#FF4444;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden}
@@ -17,7 +17,8 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 .screen.active{display:flex;flex-direction:column;min-height:100vh}
 
 /* ══ WELCOME ══ */
-#s-welcome{align-items:center;justify-content:center;padding:2rem 1.25rem;gap:1.5rem;overflow-y:auto;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.06),transparent 70%)}
+#s-welcome{align-items:center;justify-content:center;padding:2rem 1.25rem;gap:1.5rem;overflow-y:auto;
+  background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.07),transparent 70%)}
 .logo-wrap{display:flex;flex-direction:column;align-items:center;gap:.5rem}
 .mic-ring{width:72px;height:72px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;animation:pls 3s ease-in-out infinite}
 .mic-ring svg{width:32px;height:32px;fill:var(--gold)}
@@ -56,297 +57,251 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 .chip{padding:.42rem .85rem;border-radius:100px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);font-family:'Tajawal',sans-serif;font-size:.8rem;cursor:pointer;transition:all .18s}
 .chip:active{transform:scale(.95)}.chip.on{background:var(--gold);border-color:var(--gold);color:#0A0A0A;font-weight:600}
 
-/* ══════════════════════════════
-   STUDIO SCREEN
-══════════════════════════════ */
+/* ══════════════════════════════════
+   STUDIO
+══════════════════════════════════ */
 #s-studio{height:100vh;min-height:unset;position:fixed;inset:0;overflow:hidden;display:flex;flex-direction:column}
-
-.prog-bar{height:2px;background:#0a0a0a;flex-shrink:0}
+.prog-bar{height:2px;background:#080604;flex-shrink:0}
 .prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));transition:width .6s;width:0%}
 
-/* THE ROOM */
-.room{
+/* THE SCENE */
+.scene{
   flex:1;position:relative;overflow:hidden;
-  background:linear-gradient(180deg,#1a0e05 0%,#2d1a08 35%,#1a0e05 100%);
 }
 
-/* Ceiling */
-.ceiling{
-  position:absolute;top:0;left:0;right:0;height:18%;
-  background:linear-gradient(180deg,#0d0804,#1a1005);
+/* Real photo background */
+.scene-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1400&q=80&fit=crop');
+  background-size:cover;
+  background-position:center 30%;
+  filter:brightness(.45) saturate(.8);
 }
-/* Ceiling light strip */
-.ceiling-light{
-  position:absolute;top:0;left:10%;right:10%;height:3px;
-  background:linear-gradient(90deg,transparent,rgba(255,220,120,.15),rgba(255,220,120,.3),rgba(255,220,120,.15),transparent);
-  box-shadow:0 0 40px 10px rgba(255,200,80,.08);
+/* Warm color grade overlay */
+.scene-grade{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(80,35,5,.55) 0%,rgba(40,20,5,.3) 50%,rgba(60,30,8,.5) 100%);
+  mix-blend-mode:multiply;
 }
-
-/* Back wall — warm brick/plaster */
-.back-wall{
-  position:absolute;top:0;left:0;right:0;bottom:35%;
-  background:
-    linear-gradient(180deg,#1a0d04 0%,#2a1508 40%,#1e1006 100%);
-  overflow:hidden;
+/* Vignette */
+.scene-vignette{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,0,.75) 100%);
 }
-/* Wall texture lines */
-.back-wall::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(0,0,0,.08) 28px,rgba(0,0,0,.08) 30px),
-             repeating-linear-gradient(90deg,transparent,transparent 58px,rgba(0,0,0,.06) 58px,rgba(0,0,0,.06) 60px);
-}
-/* Warm ambient glow on wall */
-.back-wall::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 60%,rgba(255,160,40,.08) 0%,transparent 65%);
+/* Floor darkness */
+.scene-floor{
+  position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to top,rgba(0,0,0,.8),transparent);
 }
 
-/* Curtain right */
-.curtain{
-  position:absolute;top:0;right:0;width:22%;bottom:35%;
-  background:linear-gradient(90deg,transparent,#8B4A10,#7A3D0A,#6B3408);
-  opacity:.85;
-}
-.curtain::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(180deg,transparent,transparent 18px,rgba(0,0,0,.06) 18px,rgba(0,0,0,.06) 20px);
-}
-/* Curtain fold shadows */
-.curtain::after{
-  content:'';position:absolute;top:0;left:0;bottom:0;width:40%;
-  background:linear-gradient(90deg,rgba(0,0,0,.4),transparent);
-}
-
-/* Decorative items on back shelf */
-.back-shelf{
-  position:absolute;top:12%;left:5%;width:30%;height:3px;
-  background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),rgba(201,168,76,.3),transparent);
-}
-.shelf-items{
-  position:absolute;top:0;left:0;right:0;
-  transform:translateY(-100%);
-  display:flex;gap:8px;align-items:flex-end;padding:0 4px;
-}
-
-/* Piano */
-.piano{
-  position:absolute;top:8%;right:6%;width:18%;
-  display:flex;flex-direction:column;align-items:center;
-}
-.piano-lid{
-  width:100%;height:0;border-left:4px solid #1a1a1a;border-right:4px solid #1a1a1a;
-  border-top:18px solid #111;
-  border-radius:2px 8px 0 0;transform:skewX(-8deg);
-  box-shadow:2px -2px 8px rgba(0,0,0,.5);
-}
-.piano-body{width:95%;height:30px;background:linear-gradient(180deg,#111,#0a0a0a);border-radius:0 0 4px 4px;box-shadow:0 4px 12px rgba(0,0,0,.6)}
-.piano-keys{width:90%;height:8px;background:repeating-linear-gradient(90deg,#f5f5f5 0px,#f5f5f5 5px,#111 5px,#111 7px);border-radius:0 0 3px 3px;opacity:.7}
-/* Piano candles */
-.candles{position:absolute;top:-25px;right:-10px;display:flex;gap:4px}
-.candle{display:flex;flex-direction:column;align-items:center}
-.flame{width:3px;height:7px;background:linear-gradient(to top,#ff8800,#ffdd00,#fff);border-radius:50% 50% 20% 20%;animation:flicker .5s ease-in-out infinite alternate;filter:blur(.5px)}
-@keyframes flicker{from{transform:scaleX(1) rotate(-2deg)}to{transform:scaleX(.8) rotate(2deg) scaleY(1.1)}}
-.candle-body{width:4px;height:14px;background:linear-gradient(90deg,#e8d5b5,#d4c09a);border-radius:2px}
-
-/* Wood floor */
-.floor{
-  position:absolute;bottom:0;left:0;right:0;height:38%;
-  background:linear-gradient(180deg,#3d2008 0%,#2d1808 40%,#1e1005 100%);
-  overflow:hidden;
-}
-/* Herringbone wood pattern */
-.floor::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(0,0,0,.08) 12px,rgba(0,0,0,.08) 14px),
-             repeating-linear-gradient(-45deg,transparent,transparent 12px,rgba(201,168,76,.03) 12px,rgba(201,168,76,.03) 14px);
-}
-.floor::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(180deg,rgba(0,0,0,.5),transparent);
-}
-/* Floor reflection glow */
-.floor-glow{
-  position:absolute;bottom:0;left:15%;right:15%;height:50%;
-  background:radial-gradient(ellipse at 50% 100%,rgba(180,100,20,.12),transparent 70%);
-}
-
-/* Persian rug */
-.rug{
-  position:absolute;bottom:12%;left:50%;transform:translateX(-50%);
-  width:52%;height:22%;
-  background:
-    linear-gradient(135deg,#5a1a1a 0%,#3d1010 25%,#6b2020 50%,#3d1010 75%,#5a1a1a 100%);
-  border-radius:4px;
-  box-shadow:0 2px 20px rgba(0,0,0,.4);
-  overflow:hidden;
-}
-.rug::before{
-  content:'';position:absolute;inset:4px;
-  border:2px solid rgba(201,168,76,.25);border-radius:3px;
-}
-.rug::after{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.1) 20%,transparent 60%),
-    repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(0,0,0,.06) 6px,rgba(0,0,0,.06) 8px);
-}
-
-/* CHAIRS */
-.chair{
-  position:absolute;bottom:28%;
-  width:110px;
-  display:flex;flex-direction:column;align-items:center;
-  transition:all .5s ease;
-}
-.chair-host{left:12%;transform:translateX(-50%)}
-.chair-guest{right:12%;transform:translateX(50%)}
-
-/* Chair SVG */
-.chair-svg{width:110px;height:80px;position:relative}
-
-/* Spotlight on active chair */
-.chair-spot{
-  position:absolute;top:-80px;left:50%;transform:translateX(-50%);
-  width:120px;height:100px;
-  background:conic-gradient(from 165deg at 50% 0%,transparent,rgba(255,220,100,.06) 30deg,transparent);
-  opacity:0;transition:opacity .5s;pointer-events:none;
-}
-.chair.speaking .chair-spot{opacity:1}
-
-/* Character sitting on chair */
-.char-figure{
-  position:absolute;bottom:55px;left:50%;transform:translateX(-50%);
-  width:70px;
-  transition:all .3s;
-}
-.chair.speaking .char-figure{filter:drop-shadow(0 0 12px rgba(201,168,76,.2))}
-
-/* Talking animation */
-.char-figure.talking{animation:sit-talk .25s ease-in-out infinite alternate}
-@keyframes sit-talk{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(-2px)}}
-
-/* Microphone stand next to chair */
-.mic-arm{
-  position:absolute;bottom:68px;
-  width:3px;height:50px;
-  background:linear-gradient(to bottom,#555,#333);
-}
-.chair-host .mic-arm{right:-18px;transform:rotate(-8deg);transform-origin:bottom}
-.chair-guest .mic-arm{left:-18px;transform:rotate(8deg);transform-origin:bottom}
-.mic-head{
-  position:absolute;top:-6px;left:50%;transform:translateX(-50%);
-  width:10px;height:10px;border-radius:50%;
-  background:radial-gradient(circle,#888,#444);
-  box-shadow:0 0 4px rgba(201,168,76,.2);
-}
-.mic-base{
-  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-  width:16px;height:4px;
-  background:linear-gradient(90deg,#333,#555,#333);
-  border-radius:2px;
-}
-
-/* Character name */
-.char-label{
-  position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
-  font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;
-  background:rgba(0,0,0,.55);padding:.18rem .55rem;border-radius:100px;
-  border:1px solid rgba(201,168,76,.1);white-space:nowrap;
-  transition:all .3s;
-}
-.chair.speaking .char-label{color:var(--gold);border-color:rgba(201,168,76,.35)}
-
-/* Mouth/speaking indicator */
-.speak-dots{
-  position:absolute;top:-8px;left:50%;transform:translateX(-50%);
-  display:flex;gap:2px;opacity:0;transition:opacity .2s;
-}
-.chair.speaking .speak-dots{opacity:1}
-.speak-dots span{
-  width:3px;border-radius:2px;background:var(--gold);
-  animation:sd .4s ease-in-out infinite alternate;
-}
-.speak-dots span:nth-child(1){height:4px;animation-delay:0s}
-.speak-dots span:nth-child(2){height:7px;animation-delay:.1s}
-.speak-dots span:nth-child(3){height:5px;animation-delay:.2s}
-@keyframes sd{from{transform:scaleY(.4)}to{transform:scaleY(1)}}
-
-/* Side table */
-.side-table{
-  position:absolute;bottom:29%;
-  width:28px;height:28px;
-}
-.side-table-host{left:calc(12% + 52px);transform:translateX(-50%)}
-.side-table-guest{right:calc(12% + 52px);transform:translateX(50%)}
-.side-table-top{width:28px;height:5px;background:linear-gradient(180deg,#5a3515,#3d2208);border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
-.side-table-leg{width:3px;height:18px;background:#2d1808;margin:0 auto;border-radius:2px}
-.coffee-cup{font-size:.75rem;margin-bottom:1px}
-
-/* HUD overlay */
-.hud{
-  position:absolute;top:0;left:0;right:0;
-  padding:.5rem .85rem;display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);
+/* ── CENTER SPOTLIGHT ── */
+.center-spot{
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:500px;height:85%;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,200,80,.06) 0%,transparent 70%);
   pointer-events:none;
 }
-.live-pill{display:flex;align-items:center;gap:.3rem;background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.35);border-radius:100px;padding:.2rem .6rem;font-size:.65rem;font-weight:700;color:var(--red)}
+
+/* ── CHARACTER SPOTLIGHTS (dynamic) ── */
+.char-spot{
+  position:absolute;
+  width:220px;height:100%;
+  top:0;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .5s ease;
+}
+.char-spot-left{
+  left:10%;
+  background:radial-gradient(ellipse at 40% 20%,rgba(255,210,100,.09) 0%,transparent 65%);
+}
+.char-spot-right{
+  right:10%;
+  background:radial-gradient(ellipse at 60% 20%,rgba(255,210,100,.09) 0%,transparent 65%);
+}
+.char-spot.active{opacity:1}
+
+/* ── CHARACTERS (face-to-face silhouettes) ── */
+.character{
+  position:absolute;
+  bottom:0;
+  display:flex;flex-direction:column;align-items:center;
+  transition:all .4s ease;
+}
+/* Host on left, facing right */
+.char-left{
+  left:8%;
+  width:200px;
+}
+/* Guest on right, facing left */
+.char-right{
+  right:8%;
+  width:200px;
+}
+
+/* The SVG person */
+.person-svg{
+  width:100%;
+  filter:drop-shadow(0 0 0px transparent);
+  transition:filter .5s ease;
+}
+.character.speaking .person-svg{
+  filter:drop-shadow(0 4px 30px rgba(201,168,76,.18));
+}
+
+/* Talking body bounce */
+.person-svg.talking{animation:ptalk .3s ease-in-out infinite alternate}
+@keyframes ptalk{
+  from{transform:translateY(0) rotate(0deg)}
+  to{transform:translateY(-4px) rotate(.3deg)}
+}
+
+/* Name tag */
+.char-tag{
+  position:absolute;
+  bottom:8px;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(201,168,76,.15);
+  border-radius:100px;
+  padding:.22rem .65rem;
+  font-size:.68rem;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;
+  transition:all .4s;
+  backdrop-filter:blur(4px);
+}
+.character.speaking .char-tag{
+  color:var(--gold);
+  border-color:rgba(201,168,76,.4);
+  background:rgba(0,0,0,.75);
+}
+
+/* Speaking sound waves */
+.sound-waves{
+  position:absolute;
+  bottom:60px;
+  display:flex;align-items:flex-end;gap:3px;
+  height:20px;
+  opacity:0;transition:opacity .25s;
+}
+.character.speaking .sound-waves{opacity:1}
+.sound-waves span{
+  width:3px;border-radius:2px;background:var(--gold);
+  animation:sw .5s ease-in-out infinite alternate;
+}
+.sound-waves span:nth-child(1){height:5px;animation-delay:0s}
+.sound-waves span:nth-child(2){height:10px;animation-delay:.07s}
+.sound-waves span:nth-child(3){height:16px;animation-delay:.14s}
+.sound-waves span:nth-child(4){height:20px;animation-delay:.21s}
+.sound-waves span:nth-child(5){height:16px;animation-delay:.28s}
+.sound-waves span:nth-child(6){height:10px;animation-delay:.35s}
+.sound-waves span:nth-child(7){height:5px;animation-delay:.42s}
+@keyframes sw{from{transform:scaleY(.3);opacity:.4}to{transform:scaleY(1);opacity:1}}
+
+/* Mic stands (elegant, floor-standing) */
+.mic-stand{
+  position:absolute;
+  bottom:8px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.char-left .mic-stand{right:20px}
+.char-right .mic-stand{left:20px}
+.ms-head{
+  width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle,#999,#444);
+  box-shadow:0 0 6px rgba(201,168,76,.25),0 2px 4px rgba(0,0,0,.5);
+  margin-bottom:0;
+}
+.ms-arm{
+  width:1.5px;height:55px;
+  background:linear-gradient(to bottom,#888,#444);
+  border-radius:1px;
+}
+.ms-base{
+  width:20px;height:4px;
+  background:linear-gradient(90deg,#222,#555,#222);
+  border-radius:2px;
+  box-shadow:0 2px 4px rgba(0,0,0,.4);
+}
+
+/* HUD */
+.hud{
+  position:absolute;top:0;left:0;right:0;
+  padding:.55rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(0,0,0,.6),transparent);
+}
+.live-pill{display:flex;align-items:center;gap:.3rem;background:rgba(255,68,68,.12);border:1px solid rgba(255,68,68,.3);border-radius:100px;padding:.2rem .6rem;font-size:.65rem;font-weight:700;color:var(--red)}
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--red);animation:blink 1.2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-.ep-info{font-size:.72rem;color:rgba(255,255,255,.5);text-align:center}
-.ep-info b{color:rgba(255,220,120,.8)}
-.q-badge{font-size:.68rem;color:var(--muted);background:rgba(0,0,0,.45);padding:.18rem .5rem;border-radius:100px;border:1px solid var(--border)}
+.ep-title{font-size:.72rem;color:rgba(255,255,255,.45);text-align:center;font-family:'Playfair Display',serif}
+.ep-title b{color:rgba(255,210,100,.75);font-weight:700}
+.q-badge{font-size:.68rem;color:var(--muted);background:rgba(0,0,0,.45);border:1px solid var(--border);padding:.18rem .5rem;border-radius:100px}
 
-/* ══ BOTTOM CONTROLS ══ */
-.studio-foot{
+/* ══ BOTTOM PANEL ══ */
+.bottom-panel{
   flex-shrink:0;
-  background:linear-gradient(to top,rgba(5,3,1,.98) 70%,transparent);
-  padding:.5rem 1rem .75rem;
+  background:linear-gradient(to top,#060504 75%,transparent);
+  padding:.55rem 1rem .8rem;
 }
 .transcript{
-  background:rgba(10,8,5,.8);border:1px solid rgba(201,168,76,.1);border-radius:12px;
-  padding:.55rem .9rem;min-height:44px;max-height:72px;overflow-y:auto;
-  margin-bottom:.45rem;font-size:.85rem;line-height:1.6;
-  backdrop-filter:blur(6px);
+  background:rgba(8,6,4,.82);
+  border:1px solid rgba(201,168,76,.1);
+  border-radius:12px;
+  padding:.55rem .9rem;
+  min-height:42px;max-height:68px;
+  overflow-y:auto;
+  font-size:.85rem;line-height:1.65;
+  backdrop-filter:blur(8px);
+  margin-bottom:.4rem;
 }
 .transcript::-webkit-scrollbar{width:0}
 .t-host{color:#f0ede6}.t-guest{color:var(--gold)}.t-hint{color:var(--muted);font-style:italic;font-size:.78rem}
-.status{text-align:center;font-size:.7rem;color:var(--muted);margin-bottom:.4rem;min-height:13px}
-.ctrl-row{display:flex;align-items:center;justify-content:center;gap:.7rem}
+.status-line{text-align:center;font-size:.7rem;color:var(--muted);margin-bottom:.4rem;min-height:14px}
 
+.ctrl-row{display:flex;align-items:center;justify-content:center;gap:.75rem}
+
+/* MIC button */
 .big-mic{
-  width:56px;height:56px;border-radius:50%;
+  width:58px;height:58px;border-radius:50%;
   background:linear-gradient(135deg,var(--gold),var(--gold-l));
-  border:none;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .2s;box-shadow:0 4px 18px rgba(201,168,76,.22);position:relative;flex-shrink:0;
+  border:none;cursor:pointer;position:relative;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(201,168,76,.3);
+  transition:all .2s;
 }
-.big-mic svg{width:23px;height:23px;fill:#0A0A0A;position:relative;z-index:1;transition:opacity .15s}
-.big-mic.host-talking{background:linear-gradient(135deg,#1c1c1c,#2a2a2a);box-shadow:none}
-.big-mic.host-talking::after{content:'⏸';position:absolute;font-size:1.2rem;color:var(--gold)}
+.big-mic svg{width:24px;height:24px;fill:#0A0A0A;position:relative;z-index:1;transition:opacity .15s}
+.big-mic.host-talking{background:rgba(30,25,15,.9);border:1px solid rgba(201,168,76,.2);box-shadow:none}
+.big-mic.host-talking::after{content:'⏸';position:absolute;font-size:1.3rem;color:var(--gold)}
 .big-mic.host-talking svg{opacity:0}
-.big-mic.listening{background:linear-gradient(135deg,#991111,#EE3333);animation:mpulse 1s ease-out infinite}
-.big-mic.waiting{opacity:.38;cursor:not-allowed}
-@keyframes mpulse{0%{box-shadow:0 0 0 0 rgba(255,68,68,.5)}70%{box-shadow:0 0 0 12px rgba(255,68,68,0)}100%{box-shadow:0 0 0 0 rgba(255,68,68,0)}}
+.big-mic.listening{background:linear-gradient(135deg,#881111,#CC2222);animation:mpulse 1.1s ease-out infinite;box-shadow:0 0 0 0 rgba(204,34,34,.4)}
+.big-mic.waiting{opacity:.35;cursor:not-allowed;box-shadow:none}
+@keyframes mpulse{0%{box-shadow:0 0 0 0 rgba(204,34,34,.5)}70%{box-shadow:0 0 0 14px rgba(204,34,34,0)}100%{box-shadow:0 0 0 0 rgba(204,34,34,0)}}
 
-.ctrl-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:all .2s;flex-shrink:0}
-.ctrl-btn:hover{border-color:var(--gold)}.ctrl-btn.on{background:var(--gold-dim);border-color:var(--gold)}
+.ctrl-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:all .2s;flex-shrink:0}
+.ctrl-btn:hover{border-color:var(--gold);background:var(--gold-dim)}
+.ctrl-btn.on{background:var(--gold-dim);border-color:var(--gold)}
 
-.txt-wrap{background:rgba(10,8,5,.9);border:1px solid var(--border);border-radius:11px;padding:.5rem .8rem;display:none;align-items:flex-end;gap:.45rem;margin-top:.45rem}
+.txt-wrap{background:rgba(8,6,4,.9);border:1px solid var(--border);border-radius:12px;padding:.5rem .85rem;display:none;align-items:flex-end;gap:.5rem;margin-top:.45rem}
 .txt-wrap.show{display:flex}.txt-wrap:focus-within{border-color:var(--gold)}
 #txt-input{flex:1;background:transparent;border:none;outline:none;color:var(--txt);font-family:'Tajawal',sans-serif;font-size:.875rem;resize:none;max-height:68px;line-height:1.6;direction:rtl}
 #txt-input::placeholder{color:var(--muted)}
 .txt-send{width:32px;height:32px;background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .txt-send svg{width:13px;height:13px;fill:#0A0A0A}
-.txt-send:disabled{opacity:.38;cursor:not-allowed}
+.txt-send:disabled{opacity:.35;cursor:not-allowed}
 
-.ep-end-ov{position:absolute;inset:0;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.2rem;padding:2rem;z-index:50;backdrop-filter:blur(10px)}
-.ep-end-ov h3{font-family:'Playfair Display',serif;font-size:1.5rem;text-align:center}
+/* End overlay */
+.ep-end-ov{position:absolute;inset:0;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.2rem;padding:2rem;z-index:50;backdrop-filter:blur(12px)}
+.ep-end-ov h3{font-family:'Playfair Display',serif;font-size:1.6rem;text-align:center}
 .ep-end-ov p{color:var(--muted);font-size:.875rem;text-align:center}
-.btn-ghost{padding:.6rem 2rem;background:transparent;border:1px solid var(--gold);border-radius:10px;color:var(--gold);font-family:'Tajawal',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer}
+.btn-ghost{padding:.65rem 2rem;background:transparent;border:1px solid var(--gold);border-radius:10px;color:var(--gold);font-family:'Tajawal',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer}
 .btn-ghost:hover{background:var(--gold-dim)}
 
-#overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(5,3,1,.96);align-items:center;justify-content:center;flex-direction:column;gap:1.2rem}
+/* Loading */
+#overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(4,3,2,.97);align-items:center;justify-content:center;flex-direction:column;gap:1.2rem}
 #overlay.show{display:flex}
-.spinner{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+.spinner{width:42px;height:42px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ov-txt{font-size:.85rem;color:var(--muted)}
 </style>
@@ -354,7 +309,7 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
 <body>
 <div id="overlay"><div class="spinner"></div><p class="ov-txt" id="ov-txt">جاري التحضير...</p></div>
 
-<!-- ══ WELCOME ══ -->
+<!-- WELCOME -->
 <div id="s-welcome" class="screen active">
   <div class="logo-wrap">
     <div class="mic-ring"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 17.93V21H9v2h6v-2h-2v-2.07A8 8 0 0 0 20 11h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/></svg></div>
@@ -363,7 +318,7 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
   </div>
   <div class="card">
     <h2>مرحباً بك في الاستوديو</h2>
-    <p>استوديو بودكاست تفاعلي — مايك يتكلم معك بصوت بشري وتقدر تقاطعه في أي لحظة.</p>
+    <p>استوديو بودكاست تفاعلي — مايك يتكلم معك بصوت بشري حقيقي وتقدر تقاطعه في أي لحظة.</p>
     <div class="lang-row">
       <button class="lang-btn" onclick="setLang('en')" id="b-en">🇬🇧 English</button>
       <button class="lang-btn on" onclick="setLang('ar')" id="b-ar">🇸🇦 العربية</button>
@@ -374,7 +329,7 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
   </div>
 </div>
 
-<!-- ══ TOPICS ══ -->
+<!-- TOPICS -->
 <div id="s-topics" class="screen">
   <div class="topics-top">
     <div class="sec-eye">اختر موضوعك</div>
@@ -386,231 +341,208 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
   <button class="btn" id="btn-rec" onclick="startEpisode()" disabled>بدء التسجيل 🎙</button>
 </div>
 
-<!-- ══ STUDIO ══ -->
+<!-- STUDIO -->
 <div id="s-studio" class="screen">
   <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
 
-  <div class="room" id="room">
-    <!-- Ceiling -->
-    <div class="ceiling"><div class="ceiling-light"></div></div>
+  <div class="scene" id="scene">
+    <!-- Background layers -->
+    <div class="scene-bg"></div>
+    <div class="scene-grade"></div>
+    <div class="scene-vignette"></div>
+    <div class="scene-floor"></div>
+    <div class="center-spot"></div>
 
-    <!-- Back wall -->
-    <div class="back-wall">
-      <!-- Shelf with items -->
-      <div class="back-shelf" style="top:22%;left:4%;width:25%">
-        <div class="shelf-items">
-          <span style="font-size:.9rem">📚</span>
-          <span style="font-size:.75rem">🕯️</span>
-          <span style="font-size:.85rem">🖼️</span>
-        </div>
-      </div>
-    </div>
+    <!-- Dynamic spotlights -->
+    <div class="char-spot char-spot-left" id="spot-left"></div>
+    <div class="char-spot char-spot-right" id="spot-right"></div>
 
-    <!-- Curtain -->
-    <div class="curtain"></div>
+    <!-- HOST — left side, facing right -->
+    <div class="character char-left" id="char-host">
+      <div class="sound-waves"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
-    <!-- Piano -->
-    <div class="piano">
-      <div class="candles">
-        <div class="candle"><div class="flame"></div><div class="candle-body"></div></div>
-        <div class="candle"><div class="flame" style="animation-delay:.2s"></div><div class="candle-body"></div></div>
-        <div class="candle"><div class="flame" style="animation-delay:.4s"></div><div class="candle-body"></div></div>
-      </div>
-      <div class="piano-lid"></div>
-      <div class="piano-body"></div>
-      <div class="piano-keys"></div>
-    </div>
-
-    <!-- Floor -->
-    <div class="floor"><div class="floor-glow"></div></div>
-
-    <!-- Rug -->
-    <div class="rug"></div>
-
-    <!-- HOST CHAIR (left) -->
-    <div class="chair chair-host" id="chair-host">
-      <div class="chair-spot"></div>
-      <!-- Mic stand -->
-      <div class="mic-arm"><div class="mic-head"></div><div class="mic-base"></div></div>
-      <!-- Chair SVG -->
-      <svg class="chair-svg" viewBox="0 0 110 80" fill="none">
-        <!-- Back cushion -->
-        <rect x="15" y="5" width="80" height="52" rx="12" fill="#c8b898"/>
-        <rect x="15" y="5" width="80" height="52" rx="12" fill="url(#cg1)" opacity=".6"/>
-        <!-- Back cushion shadow -->
-        <rect x="20" y="8" width="70" height="46" rx="10" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="2"/>
-        <!-- Seat cushion -->
-        <rect x="10" y="48" width="90" height="22" rx="10" fill="#d4c4a0"/>
-        <rect x="10" y="48" width="90" height="22" rx="10" fill="url(#cg2)" opacity=".5"/>
+      <svg class="person-svg" id="fig-host" viewBox="0 0 200 380" fill="none">
+        <!-- Shadow on floor -->
+        <ellipse cx="100" cy="375" rx="55" ry="8" fill="rgba(0,0,0,.5)"/>
         <!-- Legs -->
-        <rect x="18" y="68" width="8" height="14" rx="4" fill="#5a3515"/>
-        <rect x="84" y="68" width="8" height="14" rx="4" fill="#5a3515"/>
-        <!-- Arm rests -->
-        <rect x="5" y="42" width="12" height="28" rx="6" fill="#c0a878"/>
-        <rect x="93" y="42" width="12" height="28" rx="6" fill="#c0a878"/>
+        <rect x="70" y="260" width="24" height="110" rx="12" fill="#0d0d0d"/>
+        <rect x="106" y="260" width="24" height="110" rx="12" fill="#0d0d0d"/>
+        <!-- Shoes -->
+        <ellipse cx="82" cy="370" rx="18" ry="7" fill="#111" transform="rotate(-5 82 370)"/>
+        <ellipse cx="118" cy="370" rx="18" ry="7" fill="#111" transform="rotate(5 118 370)"/>
+        <!-- Suit body -->
+        <path d="M52 175 Q50 220 55 270 L145 270 Q150 220 148 175 Q135 165 120 160 L100 190 L80 160 Q65 165 52 175Z" fill="#1a1208"/>
+        <!-- Suit gradient highlight -->
+        <path d="M52 175 Q50 220 55 270 L145 270 Q150 220 148 175 Q135 165 120 160 L100 190 L80 160 Q65 165 52 175Z" fill="url(#sg1)" opacity=".4"/>
+        <!-- Shirt -->
+        <polygon points="100,165 88,185 100,195 112,185" fill="#f0ede6" opacity=".25"/>
+        <!-- Tie -->
+        <polygon points="100,168 96,195 100,205 104,195" fill="#C9A84C" opacity=".6"/>
+        <!-- Lapels -->
+        <polygon points="100,165 78,155 82,185" fill="#252010" opacity=".8"/>
+        <polygon points="100,165 122,155 118,185" fill="#252010" opacity=".8"/>
+        <!-- Left arm (relaxed) -->
+        <path d="M52 178 Q30 200 28 240 Q26 260 38 268 Q50 272 58 258 Q62 240 68 220 Q62 198 52 178Z" fill="#1a1208"/>
+        <!-- Right arm (slightly raised — facing guest) -->
+        <path d="M148 178 Q168 195 172 230 Q176 255 164 262 Q152 268 144 255 Q138 238 134 215 Q138 196 148 178Z" fill="#1a1208"/>
+        <!-- Hands -->
+        <ellipse cx="36" cy="268" rx="12" ry="9" fill="#c8946a"/>
+        <ellipse cx="162" cy="262" rx="12" ry="9" fill="#c8946a"/>
+        <!-- Neck -->
+        <rect x="88" y="140" width="24" height="28" rx="10" fill="#c8946a"/>
+        <!-- Head -->
+        <ellipse cx="100" cy="108" rx="46" ry="52" fill="#c8946a"/>
+        <ellipse cx="100" cy="108" rx="46" ry="52" fill="url(#hg1)"/>
+        <!-- Hair (short, neat) -->
+        <path d="M54 90 Q56 50 100 46 Q144 50 146 90 Q138 70 100 68 Q62 70 54 90Z" fill="#1a0f05"/>
+        <ellipse cx="100" cy="60" rx="44" ry="16" fill="#1a0f05"/>
+        <!-- Side hair -->
+        <path d="M54 90 Q50 100 52 115 Q54 100 62 95Z" fill="#1a0f05"/>
+        <path d="M146 90 Q150 100 148 115 Q146 100 138 95Z" fill="#1a0f05"/>
+        <!-- Ear left (visible) -->
+        <ellipse cx="54" cy="112" rx="9" ry="12" fill="#b87848"/>
+        <ellipse cx="54" cy="112" rx="5" ry="8" fill="#c8946a"/>
+        <!-- Ear right -->
+        <ellipse cx="146" cy="112" rx="9" ry="12" fill="#b87848"/>
+        <!-- Earpiece left -->
+        <circle cx="54" cy="115" r="4" fill="#C9A84C" opacity=".8"/>
+        <!-- Eyes -->
+        <ellipse cx="82" cy="105" rx="9" ry="10" fill="#fff"/>
+        <ellipse cx="118" cy="105" rx="9" ry="10" fill="#fff"/>
+        <!-- Iris -->
+        <circle cx="84" cy="107" r="6.5" fill="#3d2010"/>
+        <circle cx="120" cy="107" r="6.5" fill="#3d2010"/>
+        <!-- Pupil -->
+        <circle cx="85" cy="108" r="3.5" fill="#0a0604"/>
+        <circle cx="121" cy="108" r="3.5" fill="#0a0604"/>
+        <!-- Eye shine -->
+        <circle cx="87" cy="105" r="1.8" fill="#fff" opacity=".9"/>
+        <circle cx="123" cy="105" r="1.8" fill="#fff" opacity=".9"/>
+        <!-- Eyebrows -->
+        <path d="M70 93 Q82 88 94 92" stroke="#1a0f05" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M106 92 Q118 88 130 93" stroke="#1a0f05" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Nose -->
+        <path d="M96 118 Q100 128 104 118" stroke="#a06840" stroke-width="1.5" fill="none"/>
+        <ellipse cx="94" cy="124" rx="3.5" ry="3" fill="#b07848" opacity=".4"/>
+        <ellipse cx="106" cy="124" rx="3.5" ry="3" fill="#b07848" opacity=".4"/>
+        <!-- Mouth — slight smile facing right -->
+        <path id="mh" d="M82 140 Q100 150 118 140" stroke="#8B4513" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Beard/stubble -->
+        <path d="M68 140 Q100 165 132 140 Q128 155 100 162 Q72 155 68 140Z" fill="#2a1808" opacity=".2"/>
+        <!-- Jawline shadow -->
+        <ellipse cx="100" cy="148" rx="30" ry="8" fill="#1a0f05" opacity=".1"/>
         <defs>
-          <linearGradient id="cg1" x1="15" y1="5" x2="95" y2="57" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#fff" stop-opacity=".2"/>
-            <stop offset="100%" stop-color="#000" stop-opacity=".1"/>
-          </linearGradient>
-          <linearGradient id="cg2" x1="10" y1="48" x2="100" y2="70" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#fff" stop-opacity=".25"/>
-            <stop offset="100%" stop-color="#000" stop-opacity=".08"/>
+          <radialGradient id="hg1" cx="45%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#e0a880"/>
+            <stop offset="100%" stop-color="#b87848"/>
+          </radialGradient>
+          <linearGradient id="sg1" x1="50" y1="160" x2="150" y2="275" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#C9A84C" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#000" stop-opacity=".05"/>
           </linearGradient>
         </defs>
       </svg>
-      <!-- Host figure sitting -->
-      <div class="char-figure" id="fig-host">
-        <svg width="70" height="90" viewBox="0 0 70 90" fill="none">
-          <!-- Legs/pants -->
-          <rect x="20" y="62" width="13" height="24" rx="6" fill="#1a1a2e"/>
-          <rect x="37" y="62" width="13" height="24" rx="6" fill="#1a1a2e"/>
-          <!-- Shoes -->
-          <ellipse cx="26" cy="85" rx="9" ry="5" fill="#0d0d0d"/>
-          <ellipse cx="44" cy="85" rx="9" ry="5" fill="#0d0d0d"/>
-          <!-- Body/suit -->
-          <rect x="14" y="38" width="42" height="30" rx="8" fill="#1a1208"/>
-          <!-- Suit lapels -->
-          <polygon points="35,42 26,52 35,50" fill="#C9A84C" opacity=".5"/>
-          <polygon points="35,42 44,52 35,50" fill="#C9A84C" opacity=".35"/>
-          <!-- Shirt -->
-          <rect x="32" y="42" width="6" height="16" fill="#f0ede6" opacity=".25"/>
-          <!-- Arms relaxed on armrests -->
-          <rect x="4" y="44" width="12" height="22" rx="6" fill="#1a1208"/>
-          <rect x="54" y="44" width="12" height="22" rx="6" fill="#1a1208"/>
-          <!-- Hands -->
-          <ellipse cx="10" cy="67" rx="5" ry="4" fill="#d4956a"/>
-          <ellipse cx="60" cy="67" rx="5" ry="4" fill="#d4956a"/>
-          <!-- Head -->
-          <circle cx="35" cy="26" r="20" fill="#d4956a"/>
-          <circle cx="35" cy="26" r="20" fill="url(#hs1)"/>
-          <!-- Hair (short dark) -->
-          <ellipse cx="35" cy="9" rx="20" ry="9" fill="#1a0f05"/>
-          <ellipse cx="35" cy="14" rx="18" ry="6" fill="#1a0f05"/>
-          <!-- Ears -->
-          <ellipse cx="15" cy="26" rx="4" ry="5" fill="#c07850"/>
-          <ellipse cx="55" cy="26" rx="4" ry="5" fill="#c07850"/>
-          <!-- Eyes -->
-          <ellipse cx="28" cy="24" rx="3.5" ry="4" fill="#fff"/>
-          <ellipse cx="42" cy="24" rx="3.5" ry="4" fill="#fff"/>
-          <circle cx="29" cy="25" r="2.5" fill="#2d1a08"/>
-          <circle cx="43" cy="25" r="2.5" fill="#2d1a08"/>
-          <circle cx="29.7" cy="24.2" r=".8" fill="#fff"/>
-          <circle cx="43.7" cy="24.2" r=".8" fill="#fff"/>
-          <!-- Eyebrows -->
-          <path d="M24 19 Q28 17 32 19" stroke="#1a0f05" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M38 19 Q42 17 46 19" stroke="#1a0f05" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- Nose -->
-          <ellipse cx="35" cy="29" rx="2" ry="2.5" fill="#b06040" opacity=".5"/>
-          <!-- Mouth -->
-          <path id="mh" d="M29 35 Q35 39 41 35" stroke="#8B4513" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- Stubble -->
-          <ellipse cx="35" cy="42" rx="12" ry="5" fill="#1a0f05" opacity=".12"/>
-          <!-- Earpiece -->
-          <circle cx="15" cy="28" r="2.5" fill="#C9A84C" opacity=".7"/>
-          <defs>
-            <radialGradient id="hs1" cx="38%" cy="32%" r="60%">
-              <stop offset="0%" stop-color="#e8a87c"/>
-              <stop offset="100%" stop-color="#c07850"/>
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
-      <div class="speak-dots"><span></span><span></span><span></span></div>
-      <div class="char-label" id="lbl-host">مايك</div>
-    </div>
 
-    <!-- GUEST CHAIR (right) -->
-    <div class="chair chair-guest" id="chair-guest">
-      <div class="chair-spot"></div>
       <!-- Mic stand -->
-      <div class="mic-arm"><div class="mic-head"></div><div class="mic-base"></div></div>
-      <!-- Chair SVG -->
-      <svg class="chair-svg" viewBox="0 0 110 80" fill="none">
-        <rect x="15" y="5" width="80" height="52" rx="12" fill="#b8a888"/>
-        <rect x="15" y="5" width="80" height="52" rx="12" fill="url(#cg3)" opacity=".6"/>
-        <rect x="20" y="8" width="70" height="46" rx="10" fill="none" stroke="rgba(0,0,0,.12)" stroke-width="2"/>
-        <rect x="10" y="48" width="90" height="22" rx="10" fill="#c8b890"/>
-        <rect x="18" y="68" width="8" height="14" rx="4" fill="#4a2d12"/>
-        <rect x="84" y="68" width="8" height="14" rx="4" fill="#4a2d12"/>
-        <rect x="5" y="42" width="12" height="28" rx="6" fill="#b09070"/>
-        <rect x="93" y="42" width="12" height="28" rx="6" fill="#b09070"/>
+      <div class="mic-stand">
+        <div class="ms-head"></div>
+        <div class="ms-arm"></div>
+        <div class="ms-base"></div>
+      </div>
+      <div class="char-tag" id="tag-host">مايك</div>
+    </div>
+
+    <!-- GUEST — right side, facing left (mirrored) -->
+    <div class="character char-right" id="char-guest">
+      <div class="sound-waves"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+      <svg class="person-svg" id="fig-guest" viewBox="0 0 200 380" fill="none" style="transform:scaleX(-1)">
+        <!-- Shadow -->
+        <ellipse cx="100" cy="375" rx="55" ry="8" fill="rgba(0,0,0,.5)"/>
+        <!-- Legs (dark jeans) -->
+        <rect x="70" y="260" width="24" height="110" rx="12" fill="#1c2a3a"/>
+        <rect x="106" y="260" width="24" height="110" rx="12" fill="#1c2a3a"/>
+        <!-- Sneakers -->
+        <ellipse cx="82" cy="370" rx="18" ry="7" fill="#f0ede6" opacity=".85" transform="rotate(-5 82 370)"/>
+        <ellipse cx="118" cy="370" rx="18" ry="7" fill="#f0ede6" opacity=".85" transform="rotate(5 118 370)"/>
+        <!-- Casual shirt/jacket -->
+        <path d="M52 175 Q50 220 55 270 L145 270 Q150 220 148 175 Q135 165 120 160 L100 185 L80 160 Q65 165 52 175Z" fill="#2d3a1e"/>
+        <path d="M52 175 Q50 220 55 270 L145 270 Q150 220 148 175 Q135 165 120 160 L100 185 L80 160 Q65 165 52 175Z" fill="url(#sg2)" opacity=".35"/>
+        <!-- Open collar -->
+        <path d="M88 162 L100 185 L112 162" fill="none" stroke="#f0ede6" stroke-width="2" opacity=".25"/>
+        <!-- Arms (more relaxed) -->
+        <path d="M52 178 Q32 205 30 245 Q28 265 40 270 Q52 274 60 260 Q64 242 70 222 Q64 200 52 178Z" fill="#2d3a1e"/>
+        <path d="M148 178 Q166 200 168 238 Q170 258 158 264 Q146 270 138 256 Q134 238 132 218 Q138 198 148 178Z" fill="#2d3a1e"/>
+        <!-- Hands -->
+        <ellipse cx="38" cy="270" rx="12" ry="9" fill="#c8946a"/>
+        <ellipse cx="160" cy="264" rx="12" ry="9" fill="#c8946a"/>
+        <!-- Neck -->
+        <rect x="88" y="140" width="24" height="28" rx="10" fill="#c8946a"/>
+        <!-- Head -->
+        <ellipse cx="100" cy="108" rx="46" ry="52" fill="#c8946a"/>
+        <ellipse cx="100" cy="108" rx="46" ry="52" fill="url(#hg2)"/>
+        <!-- Hair slightly longer -->
+        <path d="M54 88 Q58 46 100 44 Q142 46 146 88 Q136 66 100 64 Q64 66 54 88Z" fill="#0f0a05"/>
+        <ellipse cx="100" cy="58" rx="44" ry="18" fill="#0f0a05"/>
+        <path d="M54 88 Q48 98 50 116 Q52 102 60 95Z" fill="#0f0a05"/>
+        <path d="M146 88 Q152 98 150 116 Q148 102 140 95Z" fill="#0f0a05"/>
+        <!-- Ears -->
+        <ellipse cx="54" cy="112" rx="9" ry="12" fill="#b07848"/>
+        <ellipse cx="54" cy="112" rx="5" ry="8" fill="#c8946a"/>
+        <ellipse cx="146" cy="112" rx="9" ry="12" fill="#b07848"/>
+        <!-- Eyes -->
+        <ellipse cx="82" cy="105" rx="9" ry="10" fill="#fff"/>
+        <ellipse cx="118" cy="105" rx="9" ry="10" fill="#fff"/>
+        <circle cx="84" cy="107" r="6.5" fill="#2d1508"/>
+        <circle cx="120" cy="107" r="6.5" fill="#2d1508"/>
+        <circle cx="85" cy="108" r="3.5" fill="#080402"/>
+        <circle cx="121" cy="108" r="3.5" fill="#080402"/>
+        <circle cx="87" cy="105" r="1.8" fill="#fff" opacity=".9"/>
+        <circle cx="123" cy="105" r="1.8" fill="#fff" opacity=".9"/>
+        <!-- Eyebrows -->
+        <path d="M70 92 Q82 87 94 91" stroke="#0f0a05" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M106 91 Q118 87 130 92" stroke="#0f0a05" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Nose -->
+        <path d="M96 118 Q100 128 104 118" stroke="#a06040" stroke-width="1.5" fill="none"/>
+        <ellipse cx="94" cy="124" rx="3.5" ry="3" fill="#a07040" opacity=".35"/>
+        <ellipse cx="106" cy="124" rx="3.5" ry="3" fill="#a07040" opacity=".35"/>
+        <!-- Mouth — slight confident smile -->
+        <path id="mg" d="M82 140 Q100 148 118 140" stroke="#7a3010" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Stubble -->
+        <path d="M68 140 Q100 162 132 140 Q128 153 100 160 Q72 153 68 140Z" fill="#2a1505" opacity=".18"/>
         <defs>
-          <linearGradient id="cg3" x1="15" y1="5" x2="95" y2="57" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#fff" stop-opacity=".18"/>
-            <stop offset="100%" stop-color="#000" stop-opacity=".08"/>
+          <radialGradient id="hg2" cx="45%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#daa878"/>
+            <stop offset="100%" stop-color="#b07050"/>
+          </radialGradient>
+          <linearGradient id="sg2" x1="50" y1="160" x2="150" y2="275" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#88aa44" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#000" stop-opacity=".05"/>
           </linearGradient>
         </defs>
       </svg>
-      <!-- Guest figure -->
-      <div class="char-figure" id="fig-guest">
-        <svg width="70" height="90" viewBox="0 0 70 90" fill="none">
-          <rect x="20" y="62" width="13" height="24" rx="6" fill="#1c2a3a"/>
-          <rect x="37" y="62" width="13" height="24" rx="6" fill="#1c2a3a"/>
-          <ellipse cx="26" cy="85" rx="9" ry="5" fill="#f0ede6" opacity=".9"/>
-          <ellipse cx="44" cy="85" rx="9" ry="5" fill="#f0ede6" opacity=".9"/>
-          <!-- Casual shirt -->
-          <rect x="14" y="38" width="42" height="30" rx="8" fill="#2d3a1e"/>
-          <!-- Collar open -->
-          <path d="M28 40 L35 50 L42 40" fill="none" stroke="#f0ede6" stroke-width="1.5" opacity=".3"/>
-          <rect x="4" y="44" width="12" height="22" rx="6" fill="#2d3a1e"/>
-          <rect x="54" y="44" width="12" height="22" rx="6" fill="#2d3a1e"/>
-          <ellipse cx="10" cy="67" rx="5" ry="4" fill="#c89878"/>
-          <ellipse cx="60" cy="67" rx="5" ry="4" fill="#c89878"/>
-          <!-- Head (slightly different tone) -->
-          <circle cx="35" cy="26" r="20" fill="#c89878"/>
-          <circle cx="35" cy="26" r="20" fill="url(#gs1)"/>
-          <!-- Hair (slightly longer) -->
-          <ellipse cx="35" cy="8" rx="19" ry="9" fill="#0f0a05"/>
-          <path d="M16 20 Q16 8 35 8 Q54 8 54 20" fill="#0f0a05"/>
-          <ellipse cx="16" cy="22" rx="4" ry="5" fill="#c08068"/>
-          <ellipse cx="54" cy="22" rx="4" ry="5" fill="#c08068"/>
-          <ellipse cx="28" cy="24" rx="3.5" ry="4" fill="#fff"/>
-          <ellipse cx="42" cy="24" rx="3.5" ry="4" fill="#fff"/>
-          <circle cx="29" cy="25" r="2.5" fill="#1a0a02"/>
-          <circle cx="43" cy="25" r="2.5" fill="#1a0a02"/>
-          <circle cx="29.7" cy="24.2" r=".8" fill="#fff"/>
-          <circle cx="43.7" cy="24.2" r=".8" fill="#fff"/>
-          <path d="M24 19 Q28 17.5 32 19" stroke="#0f0a05" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M38 19 Q42 17.5 46 19" stroke="#0f0a05" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <ellipse cx="35" cy="29" rx="2" ry="2.5" fill="#a05838" opacity=".45"/>
-          <path id="mg" d="M29 35 Q35 38 41 35" stroke="#7a3010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <defs>
-            <radialGradient id="gs1" cx="38%" cy="32%" r="60%">
-              <stop offset="0%" stop-color="#dca07a"/>
-              <stop offset="100%" stop-color="#b07055"/>
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
-      <div class="speak-dots"><span></span><span></span><span></span></div>
-      <div class="char-label" id="lbl-guest">الضيف</div>
-    </div>
 
-    <!-- Side tables with coffee -->
-    <div class="side-table side-table-host">
-      <div class="coffee-cup">☕</div>
-      <div class="side-table-top"></div>
-      <div class="side-table-leg"></div>
-    </div>
-    <div class="side-table side-table-guest">
-      <div class="coffee-cup">☕</div>
-      <div class="side-table-top"></div>
-      <div class="side-table-leg"></div>
+      <!-- Mic stand -->
+      <div class="mic-stand">
+        <div class="ms-head"></div>
+        <div class="ms-arm"></div>
+        <div class="ms-base"></div>
+      </div>
+      <div class="char-tag" id="tag-guest">الضيف</div>
     </div>
 
     <!-- HUD -->
     <div class="hud">
       <div class="live-pill"><div class="live-dot"></div>LIVE</div>
-      <div class="ep-info"><b id="ep-lbl">الحلقة</b></div>
+      <div class="ep-title"><b id="ep-lbl">الحلقة</b></div>
       <div class="q-badge" id="q-ctr">س ١/٦</div>
     </div>
-  </div><!-- /room -->
+  </div>
 
   <!-- Controls -->
-  <div class="studio-foot">
+  <div class="bottom-panel">
     <div class="transcript" id="transcript"><span class="t-hint">انتظر مايك...</span></div>
-    <div class="status" id="status"></div>
+    <div class="status-line" id="status"></div>
     <div class="ctrl-row">
       <div class="ctrl-btn" id="txt-btn" onclick="toggleText()">⌨️</div>
       <button class="big-mic waiting" id="mic-btn" onclick="handleMicTap()">
@@ -625,10 +557,11 @@ html,body{width:100%;font-family:'Tajawal',sans-serif;background:var(--bg);color
       </button>
     </div>
   </div>
-</div><!-- /studio -->
+</div>
 
 <script>
-const S={name:'',lang:'ar',cat:null,topic:null,msgs:[],qi:0,total:6,speaking:false,listening:false,waiting:false,done:false,currentAudio:null,rec:null,vadTimeout:null};
+const S={name:'',lang:'ar',cat:null,topic:null,msgs:[],qi:0,total:6,speaking:false,waiting:false,done:false,currentAudio:null,vadTimeout:null};
+let vadRec=null;
 
 const CATS={
   ar:[
@@ -642,7 +575,7 @@ const CATS={
   en:[
     {id:'tech',e:'💻',n:'Tech & Innovation',d:'AI, startups, digital future',s:['AI in daily life','Tech entrepreneurship','Future of work','Digital transformation','Building products']},
     {id:'biz',e:'📈',n:'Business & Leadership',d:'Growth, investment, leadership',s:['Building startups','Attracting investment','Leadership & teams','Failure & success','Market opportunities']},
-    {id:'create',e:'🎨',n:'Creativity & Design',d:'Design, content, creative industries',s:['Digital content creation','Design & visual identity','Motion graphics','Creativity in the AI era','Personal branding']},
+    {id:'create',e:'🎨',n:'Creativity & Design',d:'Design, content, creative industries',s:['Digital content creation','Design & visual identity','Motion graphics','Creativity in AI era','Personal branding']},
     {id:'self',e:'🧠',n:'Personal Growth',d:'Habits, productivity, learning',s:['Building good habits','Time & energy management','Self-directed learning','Work-life balance','Career transformation']},
     {id:'future',e:'🚀',n:'Future & Society',d:'Trends, shifts, big changes',s:['Smart cities','Changing work culture','Gen Z & the future','Sustainability','Global vs local']},
     {id:'story',e:'✨',n:'Your Story',d:'Your journey, experiences, lessons',s:['My professional journey','Hardest decision','Person who shaped me','My biggest failure','My dream']},
@@ -652,93 +585,55 @@ const CATS={
 document.getElementById('inp-name').addEventListener('input',function(){document.getElementById('btn-go').disabled=this.value.trim().length<2;});
 document.getElementById('txt-input').addEventListener('input',function(){document.getElementById('txt-send').disabled=this.value.trim().length===0;});
 
-function setLang(l){
-  S.lang=l;
-  document.getElementById('b-ar').classList.toggle('on',l==='ar');
-  document.getElementById('b-en').classList.toggle('on',l==='en');
-  document.documentElement.dir=l==='ar'?'rtl':'ltr';
-  document.getElementById('inp-name').placeholder=l==='ar'?'أدخل اسمك...':'Enter your name...';
-  document.getElementById('lbl-name').textContent=l==='ar'?'ما اسمك؟':"What's your name?";
-  document.getElementById('btn-go').textContent=l==='ar'?'دخول الاستوديو ✦':'Enter Studio ✦';
-}
-
+function setLang(l){S.lang=l;document.getElementById('b-ar').classList.toggle('on',l==='ar');document.getElementById('b-en').classList.toggle('on',l==='en');document.documentElement.dir=l==='ar'?'rtl':'ltr';document.getElementById('inp-name').placeholder=l==='ar'?'أدخل اسمك...':'Enter your name...';document.getElementById('lbl-name').textContent=l==='ar'?'ما اسمك؟':"What's your name?";document.getElementById('btn-go').textContent=l==='ar'?'دخول الاستوديو ✦':'Enter Studio ✦';}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-
-function goTopics(){
-  S.name=document.getElementById('inp-name').value.trim();
-  show('s-topics');renderCats();
-  document.getElementById('h-topics').textContent=S.lang==='ar'?`عن ماذا نتحدث، ${S.name}؟`:`What shall we discuss, ${S.name}?`;
-}
-
-function renderCats(){
-  document.getElementById('cats').innerHTML=CATS[S.lang].map(c=>`<div class="cat" onclick="pickCat('${c.id}')" id="c-${c.id}"><span class="cat-emoji">${c.e}</span><div class="cat-name">${c.n}</div><div class="cat-desc">${c.d}</div></div>`).join('');
-}
-
-function pickCat(id){
-  S.cat=id;S.topic=null;
-  document.querySelectorAll('.cat').forEach(c=>c.classList.remove('on'));
-  document.getElementById('c-'+id).classList.add('on');
-  const d=CATS[S.lang].find(c=>c.id===id);
-  document.getElementById('chips').innerHTML=d.s.map(s=>`<button class="chip" onclick="pickSub(this,'${s.replace(/'/g,"\\'")}')">${s}</button>`).join('');
-  document.getElementById('subs').classList.add('show');
-  document.getElementById('btn-rec').disabled=true;
-  setTimeout(()=>document.getElementById('subs').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
-}
-
+function goTopics(){S.name=document.getElementById('inp-name').value.trim();show('s-topics');renderCats();document.getElementById('h-topics').textContent=S.lang==='ar'?`عن ماذا نتحدث، ${S.name}؟`:`What shall we discuss, ${S.name}?`;}
+function renderCats(){document.getElementById('cats').innerHTML=CATS[S.lang].map(c=>`<div class="cat" onclick="pickCat('${c.id}')" id="c-${c.id}"><span class="cat-emoji">${c.e}</span><div class="cat-name">${c.n}</div><div class="cat-desc">${c.d}</div></div>`).join('');}
+function pickCat(id){S.cat=id;S.topic=null;document.querySelectorAll('.cat').forEach(c=>c.classList.remove('on'));document.getElementById('c-'+id).classList.add('on');const d=CATS[S.lang].find(c=>c.id===id);document.getElementById('chips').innerHTML=d.s.map(s=>`<button class="chip" onclick="pickSub(this,'${s.replace(/'/g,"\\'")}')">${s}</button>`).join('');document.getElementById('subs').classList.add('show');document.getElementById('btn-rec').disabled=true;setTimeout(()=>document.getElementById('subs').scrollIntoView({behavior:'smooth',block:'nearest'}),100);}
 function pickSub(el,t){S.topic=t;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');document.getElementById('btn-rec').disabled=false;}
 
 async function startEpisode(){
   showOvl(S.lang==='ar'?'جاري تحضير الاستوديو...':'Preparing the studio...');
   show('s-studio');
   document.getElementById('ep-lbl').textContent=S.topic;
-  document.getElementById('lbl-guest').textContent=S.name;
-  S.msgs=[];S.qi=0;S.done=false;
-  setMic('waiting');
+  document.getElementById('tag-guest').textContent=S.name;
+  S.msgs=[];S.qi=0;S.done=false;setMic('waiting');
   const opener=S.lang==='ar'
     ?`ابدأ الحلقة. رحّب بضيفك ${S.name} بحرارة واحترافية، عرّف موضوع "${S.topic}" بإيجاز ممتع، ثم اطرح السؤال الأول. جمل قصيرة طبيعية.`
     :`Open the episode. Warmly welcome ${S.name}, briefly introduce "${S.topic}", then ask the first question. Short natural sentences.`;
   S.msgs.push({role:'user',content:opener});
   try{
-    const text=await apiChat(S.msgs);
-    hideOvl();
-    S.msgs.push({role:'assistant',content:text});
-    S.qi=1;setTranscript('host','مايك: '+text);updateProg();
+    const text=await apiChat(S.msgs);hideOvl();
+    S.msgs.push({role:'assistant',content:text});S.qi=1;
+    setTranscript('host','مايك: '+text);updateProg();
     await speakHost(text);
   }catch(e){hideOvl();setTranscript('hint','⚠️ '+e.message);setMic('ready');}
 }
 
 function buildSys(){
-  if(S.lang==='ar') return `أنت "مايك"، مقدم بودكاست صوتي احترافي. أسلوبك راقٍ دافئ ذكي. تتحدث بالعربية الفصحى البسيطة الطبيعية — مثل محادثة بودكاست حقيقية.
+  if(S.lang==='ar') return `أنت "مايك"، مقدم بودكاست صوتي احترافي. أسلوبك راقٍ دافئ ذكي محفّز. تتحدث بالعربية الفصحى البسيطة الطبيعية.
 الضيف: ${S.name} | الموضوع: ${S.topic}
-قواعد: سؤال واحد فقط. جمل قصيرة طبيعية. تعمّق بذكاء. اجعل الضيف يشعر بأهميته. 6 أسئلة. عند الاختتام: ابدأ بـ [END].`;
-  return `You are "Mike," a professional podcast host. Warm, intelligent, natural conversational style.
-Guest: ${S.name} | Topic: ${S.topic}
-Rules: ONE question per response. Short natural sentences. Go deeper. Make guest feel valued. 6 questions. When closing: start with [END].`;
+قواعد: سؤال واحد فقط في كل رد. جمل قصيرة طبيعية. تعمّق بذكاء. اجعل الضيف يشعر بأهميته وتميّزه. 6 أسئلة. عند الاختتام: ابدأ بـ [END].`;
+  return `You are "Mike," a professional podcast host. Warm, intelligent, natural. Guest: ${S.name} | Topic: ${S.topic}. ONE question per response. Short sentences. Go deeper. Make guest feel valued. 6 questions. When closing: start with [END].`;
 }
 
 async function speakHost(text){
-  stopAudio();S.speaking=true;
-  setSpeaking('host');setMic('host-talking');
+  stopAudio();S.speaking=true;setSpeaking('host');setMic('host-talking');
   setStatus(S.lang==='ar'?'مايك يتحدث... تكلّم لتقاطعه':'Mike is speaking... speak to interrupt');
   const clean=text.replace(/\[END\]/g,'').replace(/\*+/g,'').replace(/\n+/g,' ').trim();
   try{
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'tts',text:clean,lang:S.lang})});
-    if(!r.ok) throw new Error('TTS error');
-    const blob=await r.blob();
-    const url=URL.createObjectURL(blob);
-    const audio=new Audio(url);
-    S.currentAudio=audio;
+    if(!r.ok)throw new Error('TTS '+(await r.json().catch(()=>({}))).error||r.status);
+    const blob=await r.blob();const url=URL.createObjectURL(blob);
+    const audio=new Audio(url);S.currentAudio=audio;
     audio.onended=()=>{S.speaking=false;setSpeaking(null);URL.revokeObjectURL(url);if(!S.done){setMic('ready');setStatus(S.lang==='ar'?'تحدّث الآن...':'Your turn...');setTimeout(()=>startVAD(),300);}};
     audio.onerror=()=>{S.speaking=false;setSpeaking(null);setMic('ready');setTimeout(()=>startVAD(),300);};
-    audio.play().catch(()=>{S.speaking=false;setSpeaking(null);setMic('ready');setStatus(S.lang==='ar'?'اضغط المايك للبدء':'Tap mic to start');});
+    audio.play().catch(()=>{S.speaking=false;setSpeaking(null);setMic('ready');setStatus(S.lang==='ar'?'اضغط للبدء':'Tap to start');});
     startVAD(true);
   }catch(e){
     S.speaking=false;
-    const u=new SpeechSynthesisUtterance(clean);
-    u.lang=S.lang==='ar'?'ar-SA':'en-US';u.rate=0.9;
-    const vs=window.speechSynthesis.getVoices();
-    const v=S.lang==='ar'?vs.find(v=>v.lang.startsWith('ar')):vs.find(v=>v.lang.startsWith('en'));
-    if(v)u.voice=v;
+    const u=new SpeechSynthesisUtterance(clean);u.lang=S.lang==='ar'?'ar-SA':'en-US';u.rate=0.9;
+    const vs=window.speechSynthesis.getVoices();const v=S.lang==='ar'?vs.find(v=>v.lang.startsWith('ar')):vs.find(v=>v.lang.startsWith('en-GB'))||vs.find(v=>v.lang.startsWith('en'));if(v)u.voice=v;
     u.onend=()=>{setSpeaking(null);setMic('ready');setTimeout(()=>startVAD(),300);};
     window.speechSynthesis.speak(u);
   }
@@ -746,14 +641,10 @@ async function speakHost(text){
 
 function stopAudio(){if(S.currentAudio){S.currentAudio.pause();S.currentAudio.src='';S.currentAudio=null;}}
 
-let vadRec=null;
 function startVAD(interruptMode=false){
   if(vadRec)return;
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){setMic('ready');return;}
-  vadRec=new SR();
-  vadRec.lang=S.lang==='ar'?'ar-SA':'en-US';
-  vadRec.continuous=true;vadRec.interimResults=true;
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setMic('ready');return;}
+  vadRec=new SR();vadRec.lang=S.lang==='ar'?'ar-SA':'en-US';vadRec.continuous=true;vadRec.interimResults=true;
   let finalText='';
   vadRec.onstart=()=>{if(!interruptMode){setMic('listening');setSpeaking('guest');setStatus(S.lang==='ar'?'أنا أسمعك...':'Listening...');}};
   vadRec.onresult=(e)=>{
@@ -761,48 +652,34 @@ function startVAD(interruptMode=false){
     for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)final+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript;}
     if(interruptMode&&(interim||final)){
       stopAudio();window.speechSynthesis.cancel();S.speaking=false;interruptMode=false;
-      setSpeaking('guest');setMic('listening');
-      setStatus(S.lang==='ar'?'تفضّل، أنا أسمعك...':'Go ahead...');
+      setSpeaking('guest');setMic('listening');setStatus(S.lang==='ar'?'تفضّل، أنا أسمعك...':'Go ahead...');
     }
     setTranscript('guest',`${S.name}: ${final||interim}`);
-    if(final){
-      finalText+=final+' ';
-      clearTimeout(S.vadTimeout);
-      S.vadTimeout=setTimeout(()=>{stopVAD();if(finalText.trim())processAnswer(finalText.trim());else{setMic('ready');startVAD();}},1800);
-    }
+    if(final){finalText+=final+' ';clearTimeout(S.vadTimeout);S.vadTimeout=setTimeout(()=>{stopVAD();if(finalText.trim())processAnswer(finalText.trim());else{setMic('ready');startVAD();}},1800);}
   };
   vadRec.onerror=(e)=>{stopVAD();if(e.error==='not-allowed'){showTextMode();setStatus(S.lang==='ar'?'يرجى السماح بالميكروفون':'Allow microphone');}else if(!interruptMode)setMic('ready');};
   vadRec.onend=()=>{if(vadRec&&!S.waiting&&!S.done&&!interruptMode){try{vadRec.start();}catch(e){}}};
   try{vadRec.start();}catch(e){vadRec=null;}
 }
 
-function stopVAD(){clearTimeout(S.vadTimeout);if(vadRec){try{vadRec.stop();}catch(e){}vadRec=null;}S.listening=false;}
+function stopVAD(){clearTimeout(S.vadTimeout);if(vadRec){try{vadRec.stop();}catch(e){}vadRec=null;}}
 
 function handleMicTap(){
   if(S.done)return;
   if(S.speaking){stopAudio();window.speechSynthesis.cancel();S.speaking=false;setSpeaking(null);stopVAD();setMic('ready');setTimeout(()=>startVAD(),200);return;}
   if(S.waiting)return;
-  if(vadRec){stopVAD();setMic('ready');setStatus('');}
-  else startVAD();
+  if(vadRec){stopVAD();setMic('ready');setStatus('');}else startVAD();
 }
 
 async function processAnswer(text){
   stopVAD();S.waiting=true;setMic('waiting');setSpeaking(null);
-  setTranscript('guest',`${S.name}: ${text}`);
-  S.msgs.push({role:'user',content:text});
+  setTranscript('guest',`${S.name}: ${text}`);S.msgs.push({role:'user',content:text});
   setStatus(S.lang==='ar'?'مايك يفكر...':'Mike is thinking...');
   try{
-    const res=await apiChat(S.msgs);
-    S.msgs.push({role:'assistant',content:res});
+    const res=await apiChat(S.msgs);S.msgs.push({role:'assistant',content:res});
     const isEnd=res.trimStart().startsWith('[END]');
-    if(isEnd){
-      S.done=true;const clean=res.replace('[END]','').trim();
-      setTranscript('host','مايك: '+clean);updateProg(true);S.waiting=false;
-      await speakHost(clean);showEnd();
-    }else{
-      S.qi=Math.min(S.qi+1,S.total);setTranscript('host','مايك: '+res);updateProg();S.waiting=false;
-      await speakHost(res);
-    }
+    if(isEnd){S.done=true;const clean=res.replace('[END]','').trim();setTranscript('host','مايك: '+clean);updateProg(true);S.waiting=false;await speakHost(clean);showEnd();}
+    else{S.qi=Math.min(S.qi+1,S.total);setTranscript('host','مايك: '+res);updateProg();S.waiting=false;await speakHost(res);}
   }catch(e){S.waiting=false;setTranscript('hint','⚠️ '+e.message);setMic('ready');setTimeout(()=>startVAD(),500);}
 }
 
@@ -818,29 +695,22 @@ async function apiChat(messages){
 }
 
 function setSpeaking(who){
-  document.getElementById('chair-host').classList.toggle('speaking',who==='host');
-  document.getElementById('chair-guest').classList.toggle('speaking',who==='guest');
-  document.getElementById('fig-host').classList.toggle('talking',who==='host');
-  document.getElementById('fig-guest').classList.toggle('talking',who==='guest');
+  ['host','guest'].forEach(c=>{
+    const id=c==='host'?'char-host':'char-guest';
+    const fig=c==='host'?'fig-host':'fig-guest';
+    const spot=c==='host'?'spot-left':'spot-right';
+    document.getElementById(id).classList.toggle('speaking',who===c);
+    document.getElementById(fig).classList.toggle('talking',who===c);
+    document.getElementById(spot).classList.toggle('active',who===c);
+  });
 }
 function setMic(st){document.getElementById('mic-btn').className='big-mic '+st;}
 function setTranscript(type,text){const c=type==='host'?'t-host':type==='guest'?'t-guest':'t-hint';document.getElementById('transcript').innerHTML=`<span class="${c}">${text.replace(/\[END\]/g,'').trim()}</span>`;}
 function setStatus(t){document.getElementById('status').textContent=t;}
 function updateProg(done=false){document.getElementById('prog').style.width=(done?100:Math.round(S.qi/S.total*100))+'%';document.getElementById('q-ctr').textContent=S.lang==='ar'?`س ${toA(S.qi)} / ${toA(S.total)}`:`Q ${S.qi} / ${S.total}`;}
 function toA(n){return String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);}
-function showEnd(){
-  const ov=document.createElement('div');ov.className='ep-end-ov';
-  ov.innerHTML=`<h3>🎙 ${S.lang==='ar'?'انتهت الحلقة':'Episode Complete'}</h3><p>${S.lang==='ar'?`شكراً ${S.name}، كانت حلقة رائعة!`:`Thank you ${S.name}!`}</p><button class="btn-ghost" onclick="restart()">${S.lang==='ar'?'حلقة جديدة ↺':'New Episode ↺'}</button>`;
-  document.getElementById('room').appendChild(ov);
-  document.querySelector('.studio-foot').style.display='none';
-}
-function restart(){
-  stopAudio();window.speechSynthesis.cancel();stopVAD();
-  S.msgs=[];S.qi=0;S.done=false;S.speaking=false;S.waiting=false;
-  document.querySelector('.studio-foot').style.display='';
-  document.querySelector('.ep-end-ov')?.remove();
-  setSpeaking(null);setMic('waiting');show('s-welcome');
-}
+function showEnd(){const ov=document.createElement('div');ov.className='ep-end-ov';ov.innerHTML=`<h3>🎙 ${S.lang==='ar'?'انتهت الحلقة':'Episode Complete'}</h3><p>${S.lang==='ar'?`شكراً ${S.name}، كانت حلقة رائعة!`:`Thank you ${S.name}!`}</p><button class="btn-ghost" onclick="restart()">${S.lang==='ar'?'حلقة جديدة ↺':'New Episode ↺'}</button>`;document.getElementById('scene').appendChild(ov);document.querySelector('.bottom-panel').style.display='none';}
+function restart(){stopAudio();window.speechSynthesis.cancel();stopVAD();S.msgs=[];S.qi=0;S.done=false;S.speaking=false;S.waiting=false;document.querySelector('.bottom-panel').style.display='';document.querySelector('.ep-end-ov')?.remove();setSpeaking(null);setMic('waiting');show('s-welcome');}
 function showOvl(t){document.getElementById('ov-txt').textContent=t;document.getElementById('overlay').classList.add('show');}
 function hideOvl(){document.getElementById('overlay').classList.remove('show');}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,68)+'px';}
